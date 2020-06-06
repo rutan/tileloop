@@ -12,6 +12,7 @@ const Cover = styled.div`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
+  z-index: 10000;
 `;
 
 const Box = styled.div`
@@ -24,6 +25,7 @@ const Box = styled.div`
   max-width: 600px;
   border-radius: 10px;
   padding: 15px;
+  z-index: 10001;
 `;
 
 const Preview = styled.div`
@@ -33,6 +35,7 @@ const Preview = styled.div`
   margin-bottom: 15px;
   background: no-repeat center center;
   background-size: contain;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 `;
 
 const Button = styled.a`
@@ -43,7 +46,7 @@ const Button = styled.a`
   height: 50px;
   line-height: 50px;
   text-decoration: none;
-  background: #6cf;
+  background: #0288d1;
   color: #fff;
   border-radius: 25px;
 `;

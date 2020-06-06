@@ -10,21 +10,21 @@ import { ReactSortable } from 'react-sortablejs';
 
 const Container = styled.div`
   position: relative;
-  min-height: 200px;
-  margin: 10px;
-  padding: 50px 10px 10px;
+  height: 100%;
+  padding: 10px 10px 70px;
   border: 2px dotted #ccc;
   border-radius: 10px;
 `;
 
 const AddButton = styled.button`
   position: absolute;
+  left: 10px;
+  bottom: 10px;
   display: block;
-  top: 10px;
-  width: 180px;
-  height: 40px;
+  width: calc(100% - 20px);
+  height: 50px;
   padding: 0;
-  border-radius: 20px;
+  border-radius: 25px;
   line-height: 40px;
   background: #43a047;
   color: #fff;
@@ -90,15 +90,6 @@ export const PictureForm = () => {
           loadFiles();
         }}
       />
-      <AddButton
-        onClick={() => {
-          const fileEl = fileRef.current;
-          if (!fileEl) return;
-          fileEl.click();
-        }}
-      >
-        画像を追加する
-      </AddButton>
       <ClassNames>
         {({ css }) => (
           <ReactSortable
@@ -129,6 +120,15 @@ export const PictureForm = () => {
           </ReactSortable>
         )}
       </ClassNames>
+      <AddButton
+        onClick={() => {
+          const fileEl = fileRef.current;
+          if (!fileEl) return;
+          fileEl.click();
+        }}
+      >
+        画像を追加する
+      </AddButton>
     </Container>
   );
 };

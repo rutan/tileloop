@@ -7,6 +7,10 @@ interface Props extends InputFormProps {
   className?: string;
   label: string;
   type?: string;
+  value1: any;
+  value2: any;
+  onChangeValue1: (value: string) => void;
+  onChangeValue2: (value: string) => void;
 }
 
 const Container = styled.div<{ isFocus: boolean }>`
@@ -18,6 +22,8 @@ const Container = styled.div<{ isFocus: boolean }>`
   margin: 10px;
   padding: 20px 10px 10px 10px;
   border-radius: 10px;
+  display: flex;
+  align-items: center;
   transition: all 0.2s ease-in-out;
 `;
 
@@ -34,11 +40,26 @@ const Label = styled.label<{ isFocus: boolean }>`
 
 const InputFormWithStyle = styled(InputForm)`
   display: block;
-  width: 100%;
+  width: calc((100% - 30px) / 2);
   text-align: center;
 `;
 
-export const InputWithLabel: React.FC<Props> = ({ className, label, ...props }) => {
+const Text = styled.div`
+  display: block;
+  width: 30px;
+  text-align: center;
+  font-size: 14px;
+`;
+
+export const TwinInputWithLabel: React.FC<Props> = ({
+  className,
+  label,
+  value1,
+  value2,
+  onChangeValue1,
+  onChangeValue2,
+  ...props
+}) => {
   const [isFocus, dispatchIsFocus] = useState(false);
 
   return (
@@ -52,6 +73,20 @@ export const InputWithLabel: React.FC<Props> = ({ className, label, ...props }) 
           dispatchIsFocus(false);
         }}
         {...props}
+        value={value1}
+        onChangeValue={onChangeValue1}
+      />
+      <Text>×</Text>
+      <InputFormWithStyle
+        onFocus={() => {
+          dispatchIsFocus(true);
+        }}
+        onBlur={() => {
+          dispatchIsFocus(false);
+        }}
+        {...props}
+        value={value2}
+        onChangeValue={onChangeValue2}
       />
     </Container>
   );

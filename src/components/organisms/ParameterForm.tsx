@@ -3,16 +3,22 @@ import styled from '@emotion/styled';
 import { InputWithLabel } from '../molecules/InputWithLabel';
 import { useContext } from 'react';
 import { store, updateRenderParameterItem } from '../../store';
+import { TwinInputWithLabel } from '../molecules/TwinInputWithLabel';
 
 const Container = styled.div``;
 
 const InputBlock = styled.div`
   display: flex;
   flex-wrap: wrap;
+  margin: 20px 0;
 `;
 
 const NumberInput = styled(InputWithLabel)`
   width: 140px;
+`;
+
+const TwinNumberInput = styled(TwinInputWithLabel)`
+  width: 220px;
 `;
 
 export const ParameterForm = () => {
@@ -21,24 +27,18 @@ export const ParameterForm = () => {
   return (
     <Container>
       <InputBlock>
-        <NumberInput
-          label="出力画像の幅"
+        <TwinNumberInput
+          label="出力サイズ"
           type="number"
-          value={state.renderParameter.width}
+          value1={state.renderParameter.width}
+          value2={state.renderParameter.height}
           min={1}
           max={4096}
-          onChangeValue={(value) => {
+          onChangeValue1={(value) => {
             const num = parseInt(value, 10);
             dispatch(updateRenderParameterItem('width', isNaN(num) ? 0 : num));
           }}
-        />
-        <NumberInput
-          label="出力画像の高さ"
-          type="number"
-          value={state.renderParameter.height}
-          min={1}
-          max={4096}
-          onChangeValue={(value) => {
+          onChangeValue2={(value) => {
             const num = parseInt(value, 10);
             dispatch(updateRenderParameterItem('height', isNaN(num) ? 0 : num));
           }}
@@ -46,48 +46,35 @@ export const ParameterForm = () => {
       </InputBlock>
 
       <InputBlock>
-        <NumberInput
-          label="並べる画像の幅"
+        <TwinNumberInput
+          label="並べる画像: サイズ"
           type="number"
-          value={state.renderParameter.itemWidth}
+          value1={state.renderParameter.itemWidth}
+          value2={state.renderParameter.itemHeight}
           min={1}
           max={1024}
-          onChangeValue={(value) => {
+          onChangeValue1={(value) => {
             const num = parseInt(value, 10);
             dispatch(updateRenderParameterItem('itemWidth', isNaN(num) ? 0 : num));
           }}
-        />
-        <NumberInput
-          label="並べる画像の高さ"
-          type="number"
-          value={state.renderParameter.itemHeight}
-          min={1}
-          max={1024}
-          onChangeValue={(value) => {
+          onChangeValue2={(value) => {
             const num = parseInt(value, 10);
             dispatch(updateRenderParameterItem('itemHeight', isNaN(num) ? 0 : num));
           }}
         />
 
-        <NumberInput
-          label="並べる画像数: 横"
+        <TwinNumberInput
+          label="並べる画像: 個数"
           type="number"
-          value={state.renderParameter.itemSizeX}
+          value1={state.renderParameter.itemSizeX}
+          value2={state.renderParameter.itemSizeY}
           min={1}
           max={50}
-          onChangeValue={(value) => {
+          onChangeValue1={(value) => {
             const num = parseInt(value, 10);
             dispatch(updateRenderParameterItem('itemSizeX', isNaN(num) ? 0 : num));
           }}
-        />
-
-        <NumberInput
-          label="並べる画像数: 縦"
-          type="number"
-          value={state.renderParameter.itemSizeY}
-          min={1}
-          max={50}
-          onChangeValue={(value) => {
+          onChangeValue2={(value) => {
             const num = parseInt(value, 10);
             dispatch(updateRenderParameterItem('itemSizeY', isNaN(num) ? 0 : num));
           }}
@@ -155,7 +142,9 @@ export const ParameterForm = () => {
             dispatch(updateRenderParameterItem('bgOpacity', isNaN(num) ? 0 : num));
           }}
         />
+      </InputBlock>
 
+      <InputBlock>
         <NumberInput
           label="カバー: 色"
           type="color"
