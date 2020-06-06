@@ -33,6 +33,8 @@ const AddButton = styled.button`
 const ListStyle = css`
   display: flex;
   flex-wrap: wrap;
+  height: 100%;
+  overflow-y: auto;
 `;
 
 const PictureItemWithStyle = styled(PictureItem)`
@@ -82,6 +84,7 @@ export const PictureForm = () => {
       <input
         type="file"
         accept="image/*"
+        multiple
         ref={fileRef}
         style={{
           display: 'none',
