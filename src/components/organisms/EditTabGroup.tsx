@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
-import { ClassNames, css } from '@emotion/core';
+import { ClassNames, css } from '@emotion/react';
 import { useContext } from 'react';
 import { store } from '../../store';
 import { PictureForm } from './PictureForm';

@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { ClassNames } from '@emotion/core';
+import { ClassNames, css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useContext, useEffect, useRef } from 'react';
 import ScrollContainer from 'react-indiana-drag-scroll';
 import { setResultFile, store } from '../../store';
 import { SvgRenderer } from '../atoms/SvgRenderer';
-import { css } from '@emotion/core';
 
 const Container = styled.div`
   width: 100%;

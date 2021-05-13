@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
-import { ClassNames, css } from '@emotion/core';
+import { ClassNames, css } from '@emotion/react';
 import { useRef } from 'react';
 import { readFromFile } from '../../functions/readFromFile';
 import { useContext } from 'react';
@@ -33,7 +33,7 @@ const AddButton = styled.button`
 const ListStyle = css`
   display: flex;
   flex-wrap: wrap;
-  height: 100%;
+  max-height: 100%;
   overflow-y: auto;
 `;
 
