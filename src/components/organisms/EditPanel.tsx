@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styles from './EditPanel.module.css';
+import { HelpModal } from './HelpModal';
 import { ParameterForm } from './ParameterForm';
 import { PictureForm } from './PictureForm';
 
@@ -9,6 +10,8 @@ interface Props {
 }
 
 export const EditPanel: React.FC<Props> = ({ isExporting, onExport }) => {
+  const [isHelpOpen, setIsHelpOpen] = React.useState(false);
+
   return (
     <div className={styles.container}>
       <header className={styles.header}>
@@ -16,16 +19,28 @@ export const EditPanel: React.FC<Props> = ({ isExporting, onExport }) => {
           <h1 className={styles.title}>TileLoop</h1>
           <p className={styles.subtitle}>画像を並べてタイル画像を書き出す</p>
         </div>
-        <button
-          className={styles.exportButton}
-          type="button"
-          disabled={isExporting}
-          onClick={() => {
-            void onExport();
-          }}
-        >
-          {isExporting ? '作成中...' : 'PNGを書き出す'}
-        </button>
+        <div className={styles.actions}>
+          <button
+            className={styles.helpButton}
+            type="button"
+            aria-label="ヘルプを表示"
+            onClick={() => {
+              setIsHelpOpen(true);
+            }}
+          >
+            ?
+          </button>
+          <button
+            className={styles.exportButton}
+            type="button"
+            disabled={isExporting}
+            onClick={() => {
+              void onExport();
+            }}
+          >
+            {isExporting ? '作成中...' : 'PNGを書き出す'}
+          </button>
+        </div>
       </header>
 
       <div className={styles.body}>
@@ -37,6 +52,13 @@ export const EditPanel: React.FC<Props> = ({ isExporting, onExport }) => {
           <ParameterForm />
         </section>
       </div>
+      {isHelpOpen ? (
+        <HelpModal
+          onClose={() => {
+            setIsHelpOpen(false);
+          }}
+        />
+      ) : null}
     </div>
   );
 };
