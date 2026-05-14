@@ -17,7 +17,6 @@ export const PictureItem: React.FC<Props> = ({ className, picture, onRemove }) =
           backgroundImage: `url(${picture.url})`,
         }}
       />
-      <div className={styles.label}>ドラッグして並び替え</div>
       <button className={styles.removeButton} type="button" aria-label="画像を削除" onClick={onRemove} />
     </div>
   );

@@ -1,5 +1,7 @@
 import { Picture } from './Picture';
 
+export type TileArrangementMode = 'balanced' | 'random';
+
 export interface RenderParameter {
   pictures: Picture[];
   width: number;
@@ -15,4 +17,6 @@ export interface RenderParameter {
   bgOpacity: number;
   frontColor: string;
   frontOpacity: number;
+  arrangementMode: TileArrangementMode;
+  arrangementSeed: string;
 }

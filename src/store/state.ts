@@ -27,6 +27,8 @@ export const initialState: RootState = {
     bgOpacity: 1,
     frontColor: '#000000',
     frontOpacity: 0,
+    arrangementMode: 'balanced',
+    arrangementSeed: 'tileloop',
   },
   resultFile: '',
 };

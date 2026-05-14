@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useContext } from 'react';
 import { store, updateRenderParameterItem } from '../../store';
+import { TileArrangementMode } from '../../types/RenderParameter';
 import { InputWithLabel } from '../molecules/InputWithLabel';
 import { TwinInputWithLabel } from '../molecules/TwinInputWithLabel';
 import styles from './ParameterForm.module.css';
@@ -32,6 +33,30 @@ export const ParameterForm = () => {
 
       <section className={styles.section}>
         <h3 className={styles.sectionTitle}>タイル</h3>
+        <div className={styles.arrangementRow}>
+          <label className={styles.field}>
+            <span className={styles.fieldLabel}>並べ方</span>
+            <select
+              className={styles.select}
+              value={state.renderParameter.arrangementMode}
+              onChange={(e) => {
+                dispatch(updateRenderParameterItem('arrangementMode', e.target.value as TileArrangementMode));
+              }}
+            >
+              <option value="balanced">バランスよく</option>
+              <option value="random">ランダム</option>
+            </select>
+          </label>
+          <button
+            className={styles.shuffleButton}
+            type="button"
+            onClick={() => {
+              dispatch(updateRenderParameterItem('arrangementSeed', crypto.randomUUID()));
+            }}
+          >
+            並びをシャッフル
+          </button>
+        </div>
         <div className={styles.grid}>
           <TwinInputWithLabel
             label="画像サイズ"

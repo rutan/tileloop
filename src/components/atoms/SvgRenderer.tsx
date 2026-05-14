@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { createTilePlacements } from '../../functions/createTilePlacements';
 import { RenderParameter } from '../../types/RenderParameter';
 
 interface Props {
@@ -6,22 +7,9 @@ interface Props {
 }
 
 export const SvgRenderer = React.forwardRef<SVGSVGElement, Props>(({ parameter }, ref) => {
-  const {
-    pictures,
-    width,
-    height,
-    itemSizeX,
-    itemSizeY,
-    itemWidth,
-    itemHeight,
-    rotation,
-    margin,
-    borderRadius,
-    bgColor,
-    bgOpacity,
-    frontColor,
-    frontOpacity,
-  } = parameter;
+  const { width, height, itemWidth, itemHeight, rotation, borderRadius, bgColor, bgOpacity, frontColor, frontOpacity } =
+    parameter;
+  const placements = createTilePlacements(parameter);
 
   return (
     <svg
@@ -48,34 +36,17 @@ export const SvgRenderer = React.forwardRef<SVGSVGElement, Props>(({ parameter }
       </defs>
       <rect fill={bgColor} opacity={bgOpacity} x={-width / 2} y={-height / 2} width={width} height={height} />
       <g transform={`rotate(${rotation})`}>
-        {Array.from({ length: itemSizeY }).map((_, j) => {
-          return (
-            <React.Fragment key={`item-${j}`}>
-              {Array.from({ length: itemSizeX }).map((_, i) => {
-                if (pictures.length === 0) return null;
-
-                const picture = pictures[(i + j * itemSizeX) % pictures.length];
-                return (
-                  <g
-                    key={`item-${i}_${j}`}
-                    transform={`translate(${(i - itemSizeX / 2) * (itemWidth + margin)} ${
-                      (j - itemSizeY / 2) * (itemHeight + margin)
-                    })`}
-                    filter="url(#drop-shadow)"
-                  >
-                    <image
-                      clipPath="url(#image-clip)"
-                      href={picture.url}
-                      width={itemWidth}
-                      height={itemHeight}
-                      preserveAspectRatio="xMidYMid slice"
-                    />
-                  </g>
-                );
-              })}
-            </React.Fragment>
-          );
-        })}
+        {placements.map((placement) => (
+          <g key={placement.id} transform={`translate(${placement.x} ${placement.y})`} filter="url(#drop-shadow)">
+            <image
+              clipPath="url(#image-clip)"
+              href={placement.picture.url}
+              width={itemWidth}
+              height={itemHeight}
+              preserveAspectRatio="xMidYMid slice"
+            />
+          </g>
+        ))}
       </g>
       <rect fill={frontColor} opacity={frontOpacity} x={-width / 2} y={-height / 2} width={width} height={height} />
     </svg>

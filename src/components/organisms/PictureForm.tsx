@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { useContext } from 'react';
 import { useRef } from 'react';
-import { ReactSortable } from 'react-sortablejs';
 import { readFromFile } from '../../functions/readFromFile';
-import { addPictures, removePicture, store, updateRenderParameterItem } from '../../store';
+import { addPictures, removePicture, store } from '../../store';
 import { PictureItem } from '../molecules/PictureItem';
 import styles from './PictureForm.module.css';
 
@@ -72,19 +71,7 @@ export const PictureForm = () => {
           fileEl.value = '';
         }}
       />
-      <ReactSortable
-        className={styles.list}
-        list={state.renderParameter.pictures}
-        setList={(pictures) => {
-          dispatch(
-            updateRenderParameterItem(
-              'pictures',
-              pictures.map(({ id, url }) => ({ id, url })),
-            ),
-          );
-        }}
-        animation={200}
-      >
+      <div className={styles.list}>
         {state.renderParameter.pictures.map((picture) => (
           <PictureItem
             className={styles.pictureItem}
@@ -95,7 +82,7 @@ export const PictureForm = () => {
             }}
           />
         ))}
-      </ReactSortable>
+      </div>
     </div>
   );
 };
