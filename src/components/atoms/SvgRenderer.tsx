@@ -7,9 +7,41 @@ interface Props {
 }
 
 export const SvgRenderer = React.forwardRef<SVGSVGElement, Props>(({ parameter }, ref) => {
-  const { width, height, itemWidth, itemHeight, rotation, borderRadius, bgColor, bgOpacity, frontColor, frontOpacity } =
-    parameter;
-  const placements = React.useMemo(() => createTilePlacements(parameter), [parameter]);
+  const {
+    width,
+    height,
+    pictures,
+    itemWidth,
+    itemHeight,
+    rotation,
+    margin,
+    borderRadius,
+    bgColor,
+    bgOpacity,
+    frontColor,
+    frontOpacity,
+    shadowColor,
+    shadowOpacity,
+    shadowBlur,
+    shadowOffsetX,
+    shadowOffsetY,
+    layoutMode,
+    arrangementSeed,
+  } = parameter;
+  const placements = React.useMemo(
+    () =>
+      createTilePlacements({
+        pictures,
+        width,
+        height,
+        itemWidth,
+        itemHeight,
+        margin,
+        layoutMode,
+        arrangementSeed,
+      }),
+    [arrangementSeed, height, itemHeight, itemWidth, layoutMode, margin, pictures, width],
+  );
 
   return (
     <svg
@@ -23,15 +55,14 @@ export const SvgRenderer = React.forwardRef<SVGSVGElement, Props>(({ parameter }
         <clipPath id="image-clip">
           <rect width={itemWidth} height={itemHeight} rx={borderRadius} />
         </clipPath>
-        <filter id="drop-shadow">
-          <feComponentTransfer in="SourceAlpha">
-            <feFuncR type="discrete" tableValues="0.2" />
-            <feFuncG type="discrete" tableValues="0.2" />
-            <feFuncB type="discrete" tableValues="0.2" />
-          </feComponentTransfer>
-          <feGaussianBlur stdDeviation="1" />
-          <feOffset dx="1" dy="1" result="shadow" />
-          <feComposite in="SourceGraphic" in2="shadow" operator="over" />
+        <filter id="drop-shadow" x="-50%" y="-50%" width="200%" height="200%">
+          <feDropShadow
+            dx={shadowOffsetX}
+            dy={shadowOffsetY}
+            stdDeviation={shadowBlur}
+            floodColor={shadowColor}
+            floodOpacity={shadowOpacity}
+          />
         </filter>
       </defs>
       <rect fill={bgColor} opacity={bgOpacity} x={-width / 2} y={-height / 2} width={width} height={height} />

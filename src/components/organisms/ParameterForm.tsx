@@ -161,7 +161,7 @@ export const ParameterForm = () => {
           </section>
 
           <section className={styles.section}>
-            <h3 className={styles.sectionTitle}>色</h3>
+            <h3 className={styles.sectionTitle}>背景色</h3>
             <ColorControl
               title="背景"
               color={state.renderParameter.bgColor}
@@ -184,6 +184,53 @@ export const ParameterForm = () => {
                 dispatch(updateRenderParameterItem('frontOpacity', value));
               }}
             />
+          </section>
+
+          <section className={styles.section}>
+            <h3 className={styles.sectionTitle}>画像のシャドウ</h3>
+            <ColorControl
+              title="シャドウ"
+              color={state.renderParameter.shadowColor}
+              opacity={state.renderParameter.shadowOpacity}
+              onChangeColor={(value) => {
+                dispatch(updateRenderParameterItem('shadowColor', value));
+              }}
+              onChangeOpacity={(value) => {
+                dispatch(updateRenderParameterItem('shadowOpacity', value));
+              }}
+            />
+            <div className={styles.grid}>
+              <InputWithLabel
+                label="ぼかし"
+                type="number"
+                value={state.renderParameter.shadowBlur}
+                min={0}
+                max={128}
+                step={0.1}
+                onChangeValue={(value) => {
+                  const num = parseFloat(value);
+                  dispatch(updateRenderParameterItem('shadowBlur', isNaN(num) ? 0 : num));
+                }}
+              />
+
+              <TwinInputWithLabel
+                label="位置"
+                type="number"
+                value1={state.renderParameter.shadowOffsetX}
+                value2={state.renderParameter.shadowOffsetY}
+                min={-512}
+                max={512}
+                step={0.1}
+                onChangeValue1={(value) => {
+                  const num = parseFloat(value);
+                  dispatch(updateRenderParameterItem('shadowOffsetX', isNaN(num) ? 0 : num));
+                }}
+                onChangeValue2={(value) => {
+                  const num = parseFloat(value);
+                  dispatch(updateRenderParameterItem('shadowOffsetY', isNaN(num) ? 0 : num));
+                }}
+              />
+            </div>
           </section>
         </div>
       </details>

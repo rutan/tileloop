@@ -8,6 +8,11 @@ export interface TilePlacement {
   y: number;
 }
 
+type TilePlacementParameter = Pick<
+  RenderParameter,
+  'pictures' | 'width' | 'height' | 'itemWidth' | 'itemHeight' | 'margin' | 'layoutMode' | 'arrangementSeed'
+>;
+
 function hashString(value: string): number {
   let hash = 2166136261;
   for (let i = 0; i < value.length; i += 1) {
@@ -62,7 +67,7 @@ function pickBalancedPictureIndex(
   return bestIndexes[Math.floor(random() * bestIndexes.length)] ?? 0;
 }
 
-export function createTilePlacements(parameter: RenderParameter): TilePlacement[] {
+export function createTilePlacements(parameter: TilePlacementParameter): TilePlacement[] {
   const { pictures, width, height, itemWidth, itemHeight, margin, layoutMode, arrangementSeed } = parameter;
 
   if (pictures.length === 0) return [];

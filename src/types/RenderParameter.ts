@@ -15,6 +15,11 @@ export interface RenderParameter {
   bgOpacity: number;
   frontColor: string;
   frontOpacity: number;
+  shadowColor: string;
+  shadowOpacity: number;
+  shadowBlur: number;
+  shadowOffsetX: number;
+  shadowOffsetY: number;
   layoutMode: TileLayoutMode;
   arrangementSeed: string;
 }
