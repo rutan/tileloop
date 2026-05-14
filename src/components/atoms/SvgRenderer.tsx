@@ -5,7 +5,7 @@ interface Props {
   parameter: RenderParameter;
 }
 
-export const SvgRenderer = React.forwardRef(({ parameter }: Props, ref) => {
+export const SvgRenderer = React.forwardRef<SVGSVGElement, Props>(({ parameter }, ref) => {
   const {
     pictures,
     width,
@@ -29,7 +29,7 @@ export const SvgRenderer = React.forwardRef(({ parameter }: Props, ref) => {
       width={width}
       height={height}
       viewBox={`${-width / 2} ${-height / 2} ${width} ${height}`}
-      ref={ref as any}
+      ref={ref}
     >
       <defs>
         <clipPath id="image-clip">

@@ -1,9 +1,10 @@
-import { ClassNames, css } from '@emotion/react';
 import styled from '@emotion/styled';
 import * as React from 'react';
-import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
+import { useState } from 'react';
 import { ParameterForm } from './ParameterForm';
 import { PictureForm } from './PictureForm';
+
+type TabKey = 'pictures' | 'parameters';
 
 const Container = styled.div`
   width: 100%;
@@ -11,90 +12,81 @@ const Container = styled.div`
   padding: 10px 20px;
 `;
 
-const TabsStyle = css`
+const Tabs = styled.div`
   width: 100%;
   height: 100%;
 `;
 
-const TabListStyle = css`
+const TabList = styled.div`
   margin: 0 -10px;
   display: flex;
-  list-style: none;
 `;
 
-const TabStyle = css`
+const Tab = styled.button<{ selected: boolean }>`
   width: calc(50% - 10px * 2);
   height: 40px;
   margin: 0 10px 10px;
+  padding: 0;
   line-height: 40px;
   text-align: center;
-  border-bottom: 2px solid transparent;
+  border-bottom: 2px solid ${({ selected }: { selected: boolean }) => (selected ? '#388e3c' : 'transparent')};
   transition: all 0.2s ease-in-out;
-  color: #999;
+  color: ${({ selected }: { selected: boolean }) => (selected ? '#388e3c' : '#999')};
   font-size: 14px;
-
-  &[aria-selected='true'] {
-    border-bottom-color: #388e3c;
-    color: #388e3c;
-  }
 `;
 
-const TabPanelStyle = css`
+const TabPanel = styled.div`
   width: 100%;
+  height: calc(100% - 50px - 10px);
   overflow-y: auto;
-
-  &.react-tabs__tab-panel--selected {
-    height: calc(100% - 50px - 10px);
-  }
 `;
 
 export const EditTabGroup = () => {
+  const [selectedTab, setSelectedTab] = useState<TabKey>('pictures');
+
   return (
     <Container>
-      <ClassNames>
-        {(styles) => (
-          <Tabs
-            className={styles.css`
-              ${TabsStyle}
-            `}
+      <Tabs>
+        <TabList role="tablist">
+          <Tab
+            type="button"
+            role="tab"
+            selected={selectedTab === 'pictures'}
+            aria-selected={selectedTab === 'pictures'}
+            aria-controls="pictures-panel"
+            id="pictures-tab"
+            tabIndex={selectedTab === 'pictures' ? 0 : -1}
+            onClick={() => {
+              setSelectedTab('pictures');
+            }}
           >
-            <TabList
-              className={styles.css`
-                ${TabListStyle}
-              `}
-            >
-              <Tab
-                className={styles.css`
-                  ${TabStyle}
-                `}
-              >
-                画像の選択
-              </Tab>
-              <Tab
-                className={styles.css`
-                  ${TabStyle}
-                `}
-              >
-                詳細設定
-              </Tab>
-            </TabList>
-            <TabPanel
-              className={styles.css`
-                ${TabPanelStyle}
-              `}
-            >
-              <PictureForm />
-            </TabPanel>
-            <TabPanel
-              className={styles.css`
-                ${TabPanelStyle}
-              `}
-            >
-              <ParameterForm />
-            </TabPanel>
-          </Tabs>
+            画像の選択
+          </Tab>
+          <Tab
+            type="button"
+            role="tab"
+            selected={selectedTab === 'parameters'}
+            aria-selected={selectedTab === 'parameters'}
+            aria-controls="parameters-panel"
+            id="parameters-tab"
+            tabIndex={selectedTab === 'parameters' ? 0 : -1}
+            onClick={() => {
+              setSelectedTab('parameters');
+            }}
+          >
+            詳細設定
+          </Tab>
+        </TabList>
+        {selectedTab === 'pictures' ? (
+          <TabPanel id="pictures-panel" role="tabpanel" aria-labelledby="pictures-tab">
+            <PictureForm />
+          </TabPanel>
+        ) : (
+          <TabPanel id="parameters-panel" role="tabpanel" aria-labelledby="parameters-tab">
+            <ParameterForm />
+          </TabPanel>
         )}
-      </ClassNames>
+      </Tabs>
     </Container>
   );
 };

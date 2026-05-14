@@ -43,21 +43,14 @@ const PictureItemWithStyle = styled(PictureItem)`
 
 export const PictureForm = () => {
   const { state, dispatch } = useContext(store);
-  const containerRef = useRef<HTMLDivElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
-  const loadFiles = async () => {
-    const fileEl = fileRef.current;
-    if (!fileEl) return;
-
-    const files = fileEl.files;
-    if (!files) return;
-
+  const loadFiles = async (files: FileList) => {
     for (let i = 0; i < files.length; ++i) {
       const data = await readFromFile(files[i]);
       dispatch(
         addPicture({
-          id: Date.now(),
+          id: crypto.randomUUID(),
           url: data,
         }),
       );
@@ -66,7 +59,6 @@ export const PictureForm = () => {
 
   return (
     <Container
-      ref={containerRef}
       onDragOver={(e) => {
         e.preventDefault();
       }}
@@ -75,10 +67,7 @@ export const PictureForm = () => {
       }}
       onDrop={(e) => {
         e.preventDefault();
-        const fileEl = fileRef.current;
-        if (!fileEl) return;
-        fileEl.files = e.dataTransfer.files;
-        void loadFiles();
+        void loadFiles(e.dataTransfer.files);
       }}
     >
       <input
@@ -90,7 +79,11 @@ export const PictureForm = () => {
           display: 'none',
         }}
         onChange={() => {
-          void loadFiles();
+          const fileEl = fileRef.current;
+          if (!fileEl?.files) return;
+
+          void loadFiles(fileEl.files);
+          fileEl.value = '';
         }}
       />
       <ClassNames>
@@ -115,7 +108,6 @@ export const PictureForm = () => {
                 key={picture.id}
                 picture={picture}
                 onRemove={() => {
-                  console.log('remove!');
                   dispatch(removePicture(picture));
                 }}
               />

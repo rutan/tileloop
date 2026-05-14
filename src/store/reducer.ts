@@ -1,18 +1,25 @@
-import { RenderParameter } from '../types/RenderParameter';
 import { Actions, ADD_PICTURE, REMOVE_PICTURE, SET_RESULT_FILE_URL, UPDATE_RENDER_PARAMETER_ITEM } from './actions';
 import { RootState } from './state';
 
 export const reducer = (state: RootState, action: Actions): RootState => {
   switch (action.type) {
     case ADD_PICTURE: {
-      const newParameter: RenderParameter = { ...state.renderParameter };
-      newParameter.pictures.push(action.picture);
-      return { ...state, renderParameter: newParameter };
+      return {
+        ...state,
+        renderParameter: {
+          ...state.renderParameter,
+          pictures: [...state.renderParameter.pictures, action.picture],
+        },
+      };
     }
     case REMOVE_PICTURE: {
-      const newParameter: RenderParameter = { ...state.renderParameter };
-      newParameter.pictures = newParameter.pictures.filter((image) => image.id !== action.picture.id);
-      return { ...state, renderParameter: newParameter };
+      return {
+        ...state,
+        renderParameter: {
+          ...state.renderParameter,
+          pictures: state.renderParameter.pictures.filter((image) => image.id !== action.picture.id),
+        },
+      };
     }
     case SET_RESULT_FILE_URL:
       if (state.resultFile !== action.resultFile && state.resultFile) {
@@ -20,9 +27,13 @@ export const reducer = (state: RootState, action: Actions): RootState => {
       }
       return { ...state, resultFile: action.resultFile };
     case UPDATE_RENDER_PARAMETER_ITEM: {
-      const newParameter: RenderParameter = { ...state.renderParameter };
-      (newParameter as any)[action.key] = action.value;
-      return { ...state, renderParameter: newParameter };
+      return {
+        ...state,
+        renderParameter: {
+          ...state.renderParameter,
+          [action.key]: action.value,
+        },
+      };
     }
   }
   return state;

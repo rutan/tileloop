@@ -1,8 +1,6 @@
-import { ClassNames, css } from '@emotion/react';
 import styled from '@emotion/styled';
 import * as React from 'react';
-import { useContext, useEffect, useRef } from 'react';
-import ScrollContainer from 'react-indiana-drag-scroll';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { setResultFile, store } from '../../store';
 import { SvgRenderer } from '../atoms/SvgRenderer';
 
@@ -22,9 +20,12 @@ const DownloadButton = styled.button`
   border-radius: 25px;
 `;
 
-const ScrollContainerStyle = css`
+const ScrollArea = styled.div<{ dragging: boolean }>`
   width: 100%;
   height: 100%;
+  overflow: auto;
+  cursor: ${({ dragging }: { dragging: boolean }) => (dragging ? 'grabbing' : 'grab')};
+  user-select: none;
 `;
 
 const ScrollContainerInner = styled.div<{ width: number; height: number }>`
@@ -42,10 +43,18 @@ const ScrollContainerInner = styled.div<{ width: number; height: number }>`
 
 export const PicturePreview = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const scrollElementRef = useRef<HTMLElement | null>(null);
+  const scrollElementRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const dummyCanvasRef = useRef<HTMLCanvasElement>(null);
+  const dragRef = useRef({
+    active: false,
+    startX: 0,
+    startY: 0,
+    scrollLeft: 0,
+    scrollTop: 0,
+  });
+  const [dragging, setDragging] = useState(false);
   const { state, dispatch } = useContext(store);
 
   useEffect(() => {
@@ -107,26 +116,49 @@ export const PicturePreview = () => {
         }}
       />
 
-      <ClassNames>
-        {(styles) => (
-          <ScrollContainer
-            className={styles.css`
-              ${ScrollContainerStyle}
-            `}
-            innerRef={(element) => {
-              scrollElementRef.current = element;
-            }}
-          >
-            <ScrollContainerInner
-              width={state.renderParameter.width}
-              height={state.renderParameter.height}
-              ref={innerRef}
-            >
-              <SvgRenderer ref={svgRef} parameter={state.renderParameter} />
-            </ScrollContainerInner>
-          </ScrollContainer>
-        )}
-      </ClassNames>
+      <ScrollArea
+        ref={scrollElementRef}
+        dragging={dragging}
+        onPointerDown={(e) => {
+          if (e.button !== 0) return;
+
+          const element = e.currentTarget;
+          dragRef.current = {
+            active: true,
+            startX: e.clientX,
+            startY: e.clientY,
+            scrollLeft: element.scrollLeft,
+            scrollTop: element.scrollTop,
+          };
+          element.setPointerCapture(e.pointerId);
+          setDragging(true);
+        }}
+        onPointerMove={(e) => {
+          const drag = dragRef.current;
+          if (!drag.active) return;
+
+          const element = e.currentTarget;
+          element.scrollLeft = drag.scrollLeft - (e.clientX - drag.startX);
+          element.scrollTop = drag.scrollTop - (e.clientY - drag.startY);
+        }}
+        onPointerUp={(e) => {
+          if (!dragRef.current.active) return;
+
+          dragRef.current.active = false;
+          if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+            e.currentTarget.releasePointerCapture(e.pointerId);
+          }
+          setDragging(false);
+        }}
+        onPointerCancel={() => {
+          dragRef.current.active = false;
+          setDragging(false);
+        }}
+      >
+        <ScrollContainerInner width={state.renderParameter.width} height={state.renderParameter.height} ref={innerRef}>
+          <SvgRenderer ref={svgRef} parameter={state.renderParameter} />
+        </ScrollContainerInner>
+      </ScrollArea>
     </Container>
   );
 };

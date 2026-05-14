@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import * as React from 'react';
-import { MdClose } from 'react-icons/md';
 import { Picture } from '../../types/Picture';
 
 interface Props {
@@ -38,6 +37,12 @@ const RemoveButton = styled.button`
     background: #f33;
     color: #fff;
   }
+
+  &::before {
+    content: '×';
+    font-size: 22px;
+    line-height: 1;
+  }
 `;
 
 export const PictureItem: React.FC<Props> = ({ className, picture, onRemove }) => {
@@ -48,9 +53,7 @@ export const PictureItem: React.FC<Props> = ({ className, picture, onRemove }) =
         backgroundImage: `url(${picture.url})`,
       }}
     >
-      <RemoveButton onClick={onRemove}>
-        <MdClose />
-      </RemoveButton>
+      <RemoveButton type="button" aria-label="画像を削除" onClick={onRemove} />
     </Container>
   );
 };

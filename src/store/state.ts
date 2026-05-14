@@ -10,7 +10,7 @@ export const initialState: RootState = {
   renderParameter: {
     pictures: [
       {
-        id: 1,
+        id: 'sample',
         url: sampleImage,
       },
     ],
