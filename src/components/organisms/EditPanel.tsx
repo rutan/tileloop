@@ -38,7 +38,7 @@ export const EditPanel: React.FC<Props> = ({ isExporting, onExport }) => {
               void onExport();
             }}
           >
-            {isExporting ? '作成中...' : 'PNGを書き出す'}
+            {isExporting ? '作成中...' : '画像を保存する'}
           </button>
         </div>
       </header>

@@ -52,7 +52,7 @@ export const HelpModal: React.FC<Props> = ({ onClose }) => {
           <section className={styles.section}>
             <h3 className={styles.sectionTitle}>書き出し</h3>
             <p className={styles.text}>
-              PNGを書き出すを押すと、現在のプレビュー設定で画像を作成します。作成後に表示される画面からダウンロードできます。
+              「画像を保存する」を押すと、現在のプレビュー設定で画像を作成します。作成後に表示される画面からダウンロードできます。
             </p>
           </section>
 
