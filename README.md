@@ -24,3 +24,7 @@ pnpm build
 ```sh
 pnpm lint
 ```
+
+## License
+
+The source code in this repository is distributed under the [MIT License](./LICENSE).

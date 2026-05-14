@@ -1,8 +1,7 @@
 {
   "name": "tileloop",
-  "version": "1.0.0",
   "private": true,
-  "author": "ru_shalm <ru_shalm@hazimu.com>",
+  "author": "rutan <ru_shalm@hazimu.com>",
   "scripts": {
     "start": "vite preview",
     "dev": "vite",
