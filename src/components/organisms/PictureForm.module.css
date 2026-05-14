@@ -17,6 +17,13 @@
   font-weight: 700;
 }
 
+.actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+}
+
 .fileInput {
   display: none;
 }
@@ -37,12 +44,49 @@
   min-width: 0;
 }
 
+.clearButton,
 .addButton {
   flex: 0 0 auto;
   height: 36px;
   padding: 0 14px;
   border-radius: 18px;
+  font-weight: 700;
+}
+
+.clearButton {
+  border: 1px solid #d7d7d7;
+  background: #fff;
+  color: #555;
+}
+
+.clearButton:hover:not(:disabled) {
+  border-color: #c62828;
+  color: #c62828;
+}
+
+.clearButton:disabled {
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+.addButton {
   background: #43a047;
   color: #fff;
-  font-weight: 700;
+}
+
+@media (width <= 800px) {
+  .header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .clearButton,
+  .addButton {
+    width: 100%;
+  }
 }

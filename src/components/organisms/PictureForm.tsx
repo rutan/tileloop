@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useContext } from 'react';
 import { useRef } from 'react';
 import { readFromFile } from '../../functions/readFromFile';
-import { addPictures, removePicture, store } from '../../store';
+import { addPictures, removeAllPictures, removePicture, store } from '../../store';
 import { PictureItem } from '../molecules/PictureItem';
 import styles from './PictureForm.module.css';
 
@@ -45,17 +45,31 @@ export const PictureForm = () => {
         <div>
           <h2 className={styles.title}>画像</h2>
         </div>
-        <button
-          className={styles.addButton}
-          type="button"
-          onClick={() => {
-            const fileEl = fileRef.current;
-            if (!fileEl) return;
-            fileEl.click();
-          }}
-        >
-          画像を追加
-        </button>
+        <div className={styles.actions}>
+          <button
+            className={styles.clearButton}
+            type="button"
+            disabled={state.renderParameter.pictures.length === 0}
+            onClick={() => {
+              const confirmed = window.confirm('すべての画像を削除しますか？');
+              if (!confirmed) return;
+              dispatch(removeAllPictures());
+            }}
+          >
+            すべて削除
+          </button>
+          <button
+            className={styles.addButton}
+            type="button"
+            onClick={() => {
+              const fileEl = fileRef.current;
+              if (!fileEl) return;
+              fileEl.click();
+            }}
+          >
+            画像を追加
+          </button>
+        </div>
       </div>
       <input
         className={styles.fileInput}

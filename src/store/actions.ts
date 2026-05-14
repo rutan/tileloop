@@ -22,6 +22,12 @@ export const removePicture = (picture: Picture) =>
     picture,
   }) as const;
 
+export const REMOVE_ALL_PICTURES = 'REMOVE_ALL_PICTURES' as const;
+export const removeAllPictures = () =>
+  ({
+    type: REMOVE_ALL_PICTURES,
+  }) as const;
+
 export const SET_RESULT_FILE_URL = 'SET_RESULT_FILE_URL' as const;
 export const setResultFile = (resultFile: string) =>
   ({
@@ -43,5 +49,6 @@ export type Actions =
   | ReturnType<typeof addPicture>
   | ReturnType<typeof addPictures>
   | ReturnType<typeof removePicture>
+  | ReturnType<typeof removeAllPictures>
   | ReturnType<typeof setResultFile>
   | ReturnType<typeof updateRenderParameterItem>;

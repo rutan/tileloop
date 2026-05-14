@@ -2,6 +2,7 @@ import {
   Actions,
   ADD_PICTURE,
   ADD_PICTURES,
+  REMOVE_ALL_PICTURES,
   REMOVE_PICTURE,
   SET_RESULT_FILE_URL,
   UPDATE_RENDER_PARAMETER_ITEM,
@@ -34,6 +35,15 @@ export const reducer = (state: RootState, action: Actions): RootState => {
         renderParameter: {
           ...state.renderParameter,
           pictures: state.renderParameter.pictures.filter((image) => image.id !== action.picture.id),
+        },
+      };
+    }
+    case REMOVE_ALL_PICTURES: {
+      return {
+        ...state,
+        renderParameter: {
+          ...state.renderParameter,
+          pictures: [],
         },
       };
     }
