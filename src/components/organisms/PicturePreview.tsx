@@ -4,8 +4,17 @@ import { store } from '../../store';
 import { SvgRenderer } from '../atoms/SvgRenderer';
 import styles from './PicturePreview.module.css';
 
+const MIN_ZOOM = 0.1;
+const MAX_ZOOM = 4;
+const ZOOM_STEP = 0.1;
+const PREVIEW_PADDING = 100;
+
 interface Props {
   svgRef: React.RefObject<SVGSVGElement>;
+}
+
+function normalizeZoom(value: number): number {
+  return Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, Math.round(value * 100) / 100));
 }
 
 export const PicturePreview: React.FC<Props> = ({ svgRef }) => {
@@ -20,7 +29,37 @@ export const PicturePreview: React.FC<Props> = ({ svgRef }) => {
     scrollTop: 0,
   });
   const [dragging, setDragging] = useState(false);
+  const [zoom, setZoom] = useState(1);
   const { state } = useContext(store);
+  const previewWidth = state.renderParameter.width * zoom;
+  const previewHeight = state.renderParameter.height * zoom;
+  const zoomPercent = Math.round(zoom * 100);
+
+  const updateZoom = React.useCallback(
+    (value: number) => {
+      const nextZoom = normalizeZoom(value);
+      const element = scrollElementRef.current;
+
+      if (!element) {
+        setZoom(nextZoom);
+        return;
+      }
+
+      const centerX = element.scrollLeft + element.clientWidth / 2;
+      const centerY = element.scrollTop + element.clientHeight / 2;
+      const imageCenterX = (centerX - PREVIEW_PADDING) / zoom;
+      const imageCenterY = (centerY - PREVIEW_PADDING) / zoom;
+
+      setZoom(nextZoom);
+      requestAnimationFrame(() => {
+        element.scrollTo(
+          imageCenterX * nextZoom + PREVIEW_PADDING - element.clientWidth / 2,
+          imageCenterY * nextZoom + PREVIEW_PADDING - element.clientHeight / 2,
+        );
+      });
+    },
+    [zoom],
+  );
 
   useEffect(() => {
     const container = containerRef.current;
@@ -78,17 +117,86 @@ export const PicturePreview: React.FC<Props> = ({ svgRef }) => {
           dragRef.current.active = false;
           setDragging(false);
         }}
+        onWheel={(e) => {
+          if (!e.ctrlKey) return;
+
+          e.preventDefault();
+          updateZoom(zoom + (e.deltaY < 0 ? ZOOM_STEP : -ZOOM_STEP));
+        }}
       >
         <div
           className={styles.scrollContainerInner}
           style={{
-            width: `${state.renderParameter.width}px`,
-            height: `${state.renderParameter.height}px`,
+            width: `${previewWidth}px`,
+            height: `${previewHeight}px`,
           }}
           ref={innerRef}
         >
-          <SvgRenderer ref={svgRef} parameter={state.renderParameter} />
+          <div
+            className={styles.previewSurface}
+            style={{
+              width: `${previewWidth}px`,
+              height: `${previewHeight}px`,
+            }}
+          >
+            <div
+              className={styles.previewScale}
+              style={{
+                width: `${state.renderParameter.width}px`,
+                height: `${state.renderParameter.height}px`,
+                transform: `scale(${zoom})`,
+              }}
+            >
+              <SvgRenderer ref={svgRef} parameter={state.renderParameter} />
+            </div>
+          </div>
         </div>
+      </div>
+      <div className={styles.zoomToolbar} aria-label="プレビュー倍率">
+        <button
+          className={styles.zoomButton}
+          type="button"
+          aria-label="縮小"
+          disabled={zoom <= MIN_ZOOM}
+          onClick={() => {
+            updateZoom(zoom - ZOOM_STEP);
+          }}
+        >
+          -
+        </button>
+        <input
+          className={styles.zoomRange}
+          type="range"
+          aria-label="プレビュー倍率"
+          min={MIN_ZOOM}
+          max={MAX_ZOOM}
+          step={0.05}
+          value={zoom}
+          onChange={(e) => {
+            updateZoom(Number(e.target.value));
+          }}
+        />
+        <button
+          className={styles.zoomButton}
+          type="button"
+          aria-label="拡大"
+          disabled={zoom >= MAX_ZOOM}
+          onClick={() => {
+            updateZoom(zoom + ZOOM_STEP);
+          }}
+        >
+          +
+        </button>
+        <button
+          className={styles.zoomResetButton}
+          type="button"
+          aria-label="プレビュー倍率を100%に戻す"
+          onClick={() => {
+            updateZoom(1);
+          }}
+        >
+          {zoomPercent}%
+        </button>
       </div>
     </div>
   );
