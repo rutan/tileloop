@@ -11,8 +11,8 @@
     "lint:oxlint": "oxlint",
     "lint:tsgo": "tsgo --noEmit",
     "format": "oxfmt",
-    "deploy": "vercel",
-    "deploy-prod": "vercel --prod"
+    "deploy": "run-s build deploy:*",
+    "deploy:wrangler": "wrangler deploy"
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -30,7 +30,8 @@
     "oxlint": "^1.63.0",
     "oxlint-tsgolint": "^0.22.1",
     "vercel": "^22.0.1",
-    "vite": "^8.0.12"
+    "vite": "^8.0.12",
+    "wrangler": "^4.90.1"
   },
   "engines": {
     "node": ">=22.12.0"
