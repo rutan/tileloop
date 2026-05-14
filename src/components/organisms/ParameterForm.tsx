@@ -8,10 +8,10 @@ import { TwinInputWithLabel } from '../molecules/TwinInputWithLabel';
 import styles from './ParameterForm.module.css';
 
 const outputPresets = [
-  { label: 'OGP / カバー', width: 1200, height: 630 },
-  { label: '正方形', width: 1080, height: 1080 },
-  { label: '横長ヘッダー', width: 1500, height: 500 },
-  { label: '縦長', width: 1080, height: 1920 },
+  { label: '横長SNSカバー', width: 1500, height: 500 },
+  { label: 'スマホ壁紙', width: 1080, height: 1920 },
+  { label: 'PC壁紙', width: 1920, height: 1080 },
+  { label: 'OGP', width: 1200, height: 630 },
 ];
 
 export const ParameterForm = () => {
@@ -60,7 +60,7 @@ export const ParameterForm = () => {
                 dispatch(updateRenderParameterItem('layoutMode', e.target.value as TileLayoutMode));
               }}
             >
-              <option value="grid">グリッド</option>
+              <option value="grid">整列グリッド</option>
               <option value="staggered">ずらしグリッド</option>
             </select>
           </label>

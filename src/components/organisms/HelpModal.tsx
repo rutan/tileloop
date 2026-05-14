@@ -44,7 +44,7 @@ export const HelpModal: React.FC<Props> = ({ onClose }) => {
             <h3 className={styles.sectionTitle}>設定</h3>
             <ul className={styles.list}>
               <li>用途で出力サイズを選べます。</li>
-              <li>配置でグリッドまたはずらしグリッドを切り替えられます。</li>
+              <li>配置で並べ方を切り替えられます。</li>
               <li>詳細設定でサイズ、余白、角丸、色、シャドウを調整できます。</li>
             </ul>
           </section>
