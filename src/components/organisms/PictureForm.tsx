@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useContext } from 'react';
 import { useRef } from 'react';
-import { readFromFile } from '../../functions/readFromFile';
 import { addPictures, removeAllPictures, removePicture, store } from '../../store';
 import { PictureItem } from '../molecules/PictureItem';
 import styles from './PictureForm.module.css';
@@ -10,19 +9,14 @@ export const PictureForm = () => {
   const { state, dispatch } = useContext(store);
   const fileRef = useRef<HTMLInputElement>(null);
 
-  const loadFiles = async (files: FileList) => {
+  const loadFiles = (files: FileList) => {
     const imageFiles = Array.from(files).filter((file) => file.type.startsWith('image/'));
     if (imageFiles.length === 0) return;
 
-    const pictures = await Promise.all(
-      imageFiles.map(async (file) => {
-        const data = await readFromFile(file);
-        return {
-          id: crypto.randomUUID(),
-          url: data,
-        };
-      }),
-    );
+    const pictures = imageFiles.map((file) => ({
+      id: crypto.randomUUID(),
+      url: URL.createObjectURL(file),
+    }));
 
     dispatch(addPictures(pictures));
   };
@@ -38,7 +32,7 @@ export const PictureForm = () => {
       }}
       onDrop={(e) => {
         e.preventDefault();
-        void loadFiles(e.dataTransfer.files);
+        loadFiles(e.dataTransfer.files);
       }}
     >
       <div className={styles.header}>
@@ -81,7 +75,7 @@ export const PictureForm = () => {
           const fileEl = fileRef.current;
           if (!fileEl?.files) return;
 
-          void loadFiles(fileEl.files);
+          loadFiles(fileEl.files);
           fileEl.value = '';
         }}
       />

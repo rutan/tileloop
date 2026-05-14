@@ -9,6 +9,12 @@ import {
 } from './actions';
 import { RootState } from './state';
 
+function revokePictureUrl(url: string) {
+  if (url.startsWith('blob:')) {
+    URL.revokeObjectURL(url);
+  }
+}
+
 export const reducer = (state: RootState, action: Actions): RootState => {
   switch (action.type) {
     case ADD_PICTURE: {
@@ -30,6 +36,8 @@ export const reducer = (state: RootState, action: Actions): RootState => {
       };
     }
     case REMOVE_PICTURE: {
+      revokePictureUrl(action.picture.url);
+
       return {
         ...state,
         renderParameter: {
@@ -39,6 +47,10 @@ export const reducer = (state: RootState, action: Actions): RootState => {
       };
     }
     case REMOVE_ALL_PICTURES: {
+      state.renderParameter.pictures.forEach((picture) => {
+        revokePictureUrl(picture.url);
+      });
+
       return {
         ...state,
         renderParameter: {

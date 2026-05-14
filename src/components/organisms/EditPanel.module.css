@@ -40,6 +40,11 @@
   font-weight: 700;
 }
 
+.exportButton:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
 .body {
   flex: 1 1 auto;
   overflow-y: auto;

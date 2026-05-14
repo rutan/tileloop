@@ -9,7 +9,7 @@ interface Props {
 export const SvgRenderer = React.forwardRef<SVGSVGElement, Props>(({ parameter }, ref) => {
   const { width, height, itemWidth, itemHeight, rotation, borderRadius, bgColor, bgOpacity, frontColor, frontOpacity } =
     parameter;
-  const placements = createTilePlacements(parameter);
+  const placements = React.useMemo(() => createTilePlacements(parameter), [parameter]);
 
   return (
     <svg
