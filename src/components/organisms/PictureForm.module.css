@@ -1,0 +1,36 @@
+.container {
+  position: relative;
+  height: 100%;
+  padding: 10px 10px 70px;
+  border: 2px dotted #ccc;
+  border-radius: 10px;
+}
+
+.fileInput {
+  display: none;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.pictureItem {
+  margin: 5px;
+}
+
+.addButton {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  display: block;
+  width: calc(100% - 20px);
+  height: 50px;
+  padding: 0;
+  border-radius: 25px;
+  line-height: 40px;
+  background: #43a047;
+  color: #fff;
+}

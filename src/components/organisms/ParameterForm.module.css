@@ -1,0 +1,13 @@
+.inputBlock {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+
+.numberInput {
+  width: 140px;
+}
+
+.twinNumberInput {
+  width: 220px;
+}

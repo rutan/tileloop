@@ -1,7 +1,7 @@
-import styled from '@emotion/styled';
 import * as React from 'react';
 import { useState } from 'react';
 import { InputForm, Props as InputFormProps } from '../atoms/InputForm';
+import styles from './TwinInputWithLabel.module.css';
 
 interface Props extends InputFormProps {
   className?: string;
@@ -12,44 +12,6 @@ interface Props extends InputFormProps {
   onChangeValue1: (value: string) => void;
   onChangeValue2: (value: string) => void;
 }
-
-const Container = styled.div<{ isFocus: boolean }>`
-  position: relative;
-  border: 1px solid;
-  border-top-width: 0;
-  border-color: ${({ isFocus }: { isFocus: boolean }) => (isFocus ? '#43A047' : '#81C784')};
-  background: ${({ isFocus }: { isFocus: boolean }) => (isFocus ? '#C8E6C9' : 'transparent')};
-  margin: 10px;
-  padding: 20px 10px 10px 10px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  transition: all 0.2s ease-in-out;
-`;
-
-const Label = styled.label<{ isFocus: boolean }>`
-  position: absolute;
-  top: calc(-5px);
-  left: 0;
-  display: block;
-  width: 100%;
-  text-align: center;
-  font-size: 13px;
-  color: ${({ isFocus }: { isFocus: boolean }) => (isFocus ? '#43A047' : '#333')};
-`;
-
-const InputFormWithStyle = styled(InputForm)`
-  display: block;
-  width: calc((100% - 30px) / 2);
-  text-align: center;
-`;
-
-const Text = styled.div`
-  display: block;
-  width: 30px;
-  text-align: center;
-  font-size: 14px;
-`;
 
 export const TwinInputWithLabel: React.FC<Props> = ({
   className,
@@ -63,9 +25,10 @@ export const TwinInputWithLabel: React.FC<Props> = ({
   const [isFocus, dispatchIsFocus] = useState(false);
 
   return (
-    <Container className={className} isFocus={isFocus}>
-      <Label isFocus={isFocus}>{label}</Label>
-      <InputFormWithStyle
+    <div className={[styles.container, isFocus ? styles.focus : '', className].filter(Boolean).join(' ')}>
+      <label className={styles.label}>{label}</label>
+      <InputForm
+        className={styles.input}
         onFocus={() => {
           dispatchIsFocus(true);
         }}
@@ -76,8 +39,9 @@ export const TwinInputWithLabel: React.FC<Props> = ({
         value={value1}
         onChangeValue={onChangeValue1}
       />
-      <Text>×</Text>
-      <InputFormWithStyle
+      <div className={styles.separator}>×</div>
+      <InputForm
+        className={styles.input}
         onFocus={() => {
           dispatchIsFocus(true);
         }}
@@ -88,6 +52,6 @@ export const TwinInputWithLabel: React.FC<Props> = ({
         value={value2}
         onChangeValue={onChangeValue2}
       />
-    </Container>
+    </div>
   );
 };

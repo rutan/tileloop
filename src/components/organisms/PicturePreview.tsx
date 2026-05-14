@@ -1,45 +1,8 @@
-import styled from '@emotion/styled';
 import * as React from 'react';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { setResultFile, store } from '../../store';
 import { SvgRenderer } from '../atoms/SvgRenderer';
-
-const Container = styled.div`
-  width: 100%;
-  height: 100%;
-`;
-
-const DownloadButton = styled.button`
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  width: 100px;
-  height: 50px;
-  background: #0288d1;
-  color: #fff;
-  border-radius: 25px;
-`;
-
-const ScrollArea = styled.div<{ dragging: boolean }>`
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  cursor: ${({ dragging }: { dragging: boolean }) => (dragging ? 'grabbing' : 'grab')};
-  user-select: none;
-`;
-
-const ScrollContainerInner = styled.div<{ width: number; height: number }>`
-  width: ${({ width }: { width: number }) => `${width}px`};
-  height: ${({ height }: { height: number }) => `${height}px`};
-  min-width: 100vw;
-  min-height: 100vh;
-  padding: 100px;
-  box-sizing: content-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
+import styles from './PicturePreview.module.css';
 
 export const PicturePreview = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -74,8 +37,10 @@ export const PicturePreview = () => {
   }, [state.renderParameter.width, state.renderParameter.height]);
 
   return (
-    <Container ref={containerRef}>
-      <DownloadButton
+    <div className={styles.container} ref={containerRef}>
+      <button
+        className={styles.downloadButton}
+        type="button"
         onClick={() => {
           const svg = svgRef.current;
           const dummyCanvas = dummyCanvasRef.current;
@@ -108,17 +73,12 @@ export const PicturePreview = () => {
         }}
       >
         完成！
-      </DownloadButton>
-      <canvas
-        ref={dummyCanvasRef}
-        style={{
-          display: 'none',
-        }}
-      />
+      </button>
+      <canvas className={styles.canvas} ref={dummyCanvasRef} />
 
-      <ScrollArea
+      <div
+        className={[styles.scrollArea, dragging ? styles.dragging : ''].filter(Boolean).join(' ')}
         ref={scrollElementRef}
-        dragging={dragging}
         onPointerDown={(e) => {
           if (e.button !== 0) return;
 
@@ -155,10 +115,17 @@ export const PicturePreview = () => {
           setDragging(false);
         }}
       >
-        <ScrollContainerInner width={state.renderParameter.width} height={state.renderParameter.height} ref={innerRef}>
+        <div
+          className={styles.scrollContainerInner}
+          style={{
+            width: `${state.renderParameter.width}px`,
+            height: `${state.renderParameter.height}px`,
+          }}
+          ref={innerRef}
+        >
           <SvgRenderer ref={svgRef} parameter={state.renderParameter} />
-        </ScrollContainerInner>
-      </ScrollArea>
-    </Container>
+        </div>
+      </div>
+    </div>
   );
 };

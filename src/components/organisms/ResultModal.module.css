@@ -1,0 +1,47 @@
+.cover {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(0 0 0 / 50%);
+  border: 0;
+  padding: 0;
+  z-index: 10000;
+}
+
+.box {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  width: 100%;
+  max-width: 600px;
+  border-radius: 10px;
+  padding: 15px;
+  z-index: 10001;
+}
+
+.preview {
+  display: block;
+  width: 100%;
+  height: 300px;
+  margin-bottom: 15px;
+  background: no-repeat center center;
+  background-size: contain;
+  box-shadow: 0 0 5px rgb(0 0 0 / 20%);
+}
+
+.button {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  width: 200px;
+  height: 50px;
+  line-height: 50px;
+  text-decoration: none;
+  background: #0288d1;
+  color: #fff;
+  border-radius: 25px;
+}

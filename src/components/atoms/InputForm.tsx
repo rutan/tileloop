@@ -1,16 +1,14 @@
-import styled from '@emotion/styled';
 import * as React from 'react';
 
 export interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   onChangeValue?: (value: string) => void;
 }
 
-const Input = styled.input``;
-
-export const InputForm: React.FC<Props> = ({ onChangeValue, ...props }) => {
+export const InputForm: React.FC<Props> = ({ className, onChangeValue, ...props }) => {
   return (
-    <Input
+    <input
       {...props}
+      className={className}
       onChange={(e) => {
         const value = e.target.value;
         if (onChangeValue) onChangeValue(value);

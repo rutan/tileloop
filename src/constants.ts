@@ -1,1 +1,0 @@
-export const SCREEN_WIDTH_SMARTPHONE = 800;

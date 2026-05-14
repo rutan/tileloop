@@ -1,0 +1,36 @@
+.container {
+  position: relative;
+  background: #f1f1f1 no-repeat center center;
+  background-size: contain;
+  border: 1px solid #eee;
+  width: 120px;
+  height: 120px;
+  border-radius: 2px;
+}
+
+.removeButton {
+  position: absolute;
+  right: 2px;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  background: #fff;
+  border-radius: 100%;
+  box-shadow: 0 0 5px rgb(0 0 0 / 20%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+}
+
+.removeButton:hover {
+  background: #f33;
+  color: #fff;
+}
+
+.removeButton::before {
+  content: '×';
+  font-size: 22px;
+  line-height: 1;
+}

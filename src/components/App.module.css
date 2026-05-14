@@ -1,0 +1,35 @@
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.previewArea {
+  width: 50%;
+  height: 100%;
+  overflow: auto;
+  background: #e1e1e1;
+}
+
+.editArea {
+  position: relative;
+  z-index: 10;
+  width: 50%;
+  height: 100%;
+  overflow: auto;
+  background: #fff;
+  box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+}
+
+@media (width <= 800px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .previewArea,
+  .editArea {
+    width: 100%;
+    height: 50%;
+  }
+}

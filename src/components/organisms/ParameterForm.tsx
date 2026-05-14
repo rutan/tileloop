@@ -1,33 +1,18 @@
-import styled from '@emotion/styled';
 import * as React from 'react';
 import { useContext } from 'react';
 import { store, updateRenderParameterItem } from '../../store';
 import { InputWithLabel } from '../molecules/InputWithLabel';
 import { TwinInputWithLabel } from '../molecules/TwinInputWithLabel';
-
-const Container = styled.div``;
-
-const InputBlock = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin: 20px 0;
-`;
-
-const NumberInput = styled(InputWithLabel)`
-  width: 140px;
-`;
-
-const TwinNumberInput = styled(TwinInputWithLabel)`
-  width: 220px;
-`;
+import styles from './ParameterForm.module.css';
 
 export const ParameterForm = () => {
   const { state, dispatch } = useContext(store);
 
   return (
-    <Container>
-      <InputBlock>
-        <TwinNumberInput
+    <div>
+      <div className={styles.inputBlock}>
+        <TwinInputWithLabel
+          className={styles.twinNumberInput}
           label="出力サイズ"
           type="number"
           value1={state.renderParameter.width}
@@ -43,10 +28,11 @@ export const ParameterForm = () => {
             dispatch(updateRenderParameterItem('height', isNaN(num) ? 0 : num));
           }}
         />
-      </InputBlock>
+      </div>
 
-      <InputBlock>
-        <TwinNumberInput
+      <div className={styles.inputBlock}>
+        <TwinInputWithLabel
+          className={styles.twinNumberInput}
           label="並べる画像: サイズ"
           type="number"
           value1={state.renderParameter.itemWidth}
@@ -63,7 +49,8 @@ export const ParameterForm = () => {
           }}
         />
 
-        <TwinNumberInput
+        <TwinInputWithLabel
+          className={styles.twinNumberInput}
           label="並べる画像: 個数"
           type="number"
           value1={state.renderParameter.itemSizeX}
@@ -79,10 +66,11 @@ export const ParameterForm = () => {
             dispatch(updateRenderParameterItem('itemSizeY', isNaN(num) ? 0 : num));
           }}
         />
-      </InputBlock>
+      </div>
 
-      <InputBlock>
-        <NumberInput
+      <div className={styles.inputBlock}>
+        <InputWithLabel
+          className={styles.numberInput}
           label="画像の傾き"
           type="number"
           value={state.renderParameter.rotation}
@@ -95,7 +83,8 @@ export const ParameterForm = () => {
           }}
         />
 
-        <NumberInput
+        <InputWithLabel
+          className={styles.numberInput}
           label="画像同士の隙間"
           type="number"
           value={state.renderParameter.margin}
@@ -107,7 +96,8 @@ export const ParameterForm = () => {
           }}
         />
 
-        <NumberInput
+        <InputWithLabel
+          className={styles.numberInput}
           label="画像の角丸サイズ"
           type="number"
           value={state.renderParameter.borderRadius}
@@ -118,10 +108,11 @@ export const ParameterForm = () => {
             dispatch(updateRenderParameterItem('borderRadius', isNaN(num) ? 0 : num));
           }}
         />
-      </InputBlock>
+      </div>
 
-      <InputBlock>
-        <NumberInput
+      <div className={styles.inputBlock}>
+        <InputWithLabel
+          className={styles.numberInput}
           label="背景: 色"
           type="color"
           value={state.renderParameter.bgColor}
@@ -130,7 +121,8 @@ export const ParameterForm = () => {
           }}
         />
 
-        <NumberInput
+        <InputWithLabel
+          className={styles.numberInput}
           label="背景: 透明度"
           type="number"
           min={0}
@@ -142,10 +134,11 @@ export const ParameterForm = () => {
             dispatch(updateRenderParameterItem('bgOpacity', isNaN(num) ? 0 : num));
           }}
         />
-      </InputBlock>
+      </div>
 
-      <InputBlock>
-        <NumberInput
+      <div className={styles.inputBlock}>
+        <InputWithLabel
+          className={styles.numberInput}
           label="カバー: 色"
           type="color"
           value={state.renderParameter.frontColor}
@@ -154,7 +147,8 @@ export const ParameterForm = () => {
           }}
         />
 
-        <NumberInput
+        <InputWithLabel
+          className={styles.numberInput}
           label="カバー: 透明度"
           type="number"
           min={0}
@@ -166,7 +160,7 @@ export const ParameterForm = () => {
             dispatch(updateRenderParameterItem('frontOpacity', isNaN(num) ? 0 : num));
           }}
         />
-      </InputBlock>
-    </Container>
+      </div>
+    </div>
   );
 };
