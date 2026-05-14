@@ -1,13 +1,11 @@
 import { Picture } from './Picture';
 
-export type TileArrangementMode = 'balanced' | 'random';
+export type TileLayoutMode = 'grid' | 'staggered';
 
 export interface RenderParameter {
   pictures: Picture[];
   width: number;
   height: number;
-  itemSizeX: number;
-  itemSizeY: number;
   itemWidth: number;
   itemHeight: number;
   rotation: number;
@@ -17,6 +15,6 @@ export interface RenderParameter {
   bgOpacity: number;
   frontColor: string;
   frontOpacity: number;
-  arrangementMode: TileArrangementMode;
+  layoutMode: TileLayoutMode;
   arrangementSeed: string;
 }

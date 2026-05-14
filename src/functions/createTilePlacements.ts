@@ -63,27 +63,24 @@ function pickBalancedPictureIndex(
 }
 
 export function createTilePlacements(parameter: RenderParameter): TilePlacement[] {
-  const { pictures, itemSizeX, itemSizeY, itemWidth, itemHeight, margin, arrangementMode, arrangementSeed } = parameter;
+  const { pictures, width, height, itemWidth, itemHeight, margin, layoutMode, arrangementSeed } = parameter;
 
   if (pictures.length === 0) return [];
 
-  const columns = Math.max(1, itemSizeX);
-  const rows = Math.max(1, itemSizeY);
+  const tileStepX = Math.max(1, itemWidth + margin);
+  const tileStepY = Math.max(1, itemHeight + margin);
+  const coverSize = Math.hypot(width, height);
+  const columns = Math.max(1, Math.ceil(coverSize / tileStepX) + 2);
+  const rows = Math.max(1, Math.ceil(coverSize / tileStepY) + (layoutMode === 'staggered' ? 3 : 2));
   const random = createRandom(
-    `${arrangementSeed}:${columns}:${rows}:${pictures.map((picture) => picture.id).join(',')}`,
+    `${arrangementSeed}:${layoutMode}:${columns}:${rows}:${pictures.map((picture) => picture.id).join(',')}`,
   );
   const usageCounts = Array.from({ length: pictures.length }, () => 0);
   const grid: number[] = [];
 
   for (let y = 0; y < rows; y += 1) {
     for (let x = 0; x < columns; x += 1) {
-      let pictureIndex: number;
-
-      if (arrangementMode === 'random') {
-        pictureIndex = Math.floor(random() * pictures.length);
-      } else {
-        pictureIndex = pickBalancedPictureIndex(grid, usageCounts, x, y, columns, pictures.length, random);
-      }
+      const pictureIndex = pickBalancedPictureIndex(grid, usageCounts, x, y, columns, pictures.length, random);
 
       usageCounts[pictureIndex] += 1;
       grid[y * columns + x] = pictureIndex;
@@ -93,12 +90,13 @@ export function createTilePlacements(parameter: RenderParameter): TilePlacement[
   return grid.map((pictureIndex, index) => {
     const x = index % columns;
     const y = Math.floor(index / columns);
+    const staggerOffset = layoutMode === 'staggered' && x % 2 === 1 ? tileStepY / 2 : 0;
 
     return {
       id: `tile-${x}-${y}-${pictures[pictureIndex].id}`,
       picture: pictures[pictureIndex],
-      x: (x - columns / 2) * (itemWidth + margin),
-      y: (y - rows / 2) * (itemHeight + margin),
+      x: (x - columns / 2) * tileStepX,
+      y: (y - rows / 2) * tileStepY + staggerOffset,
     };
   });
 }

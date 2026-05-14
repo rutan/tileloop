@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useContext } from 'react';
 import { store, updateRenderParameterItem } from '../../store';
-import { TileArrangementMode } from '../../types/RenderParameter';
+import { TileLayoutMode } from '../../types/RenderParameter';
 import { InputWithLabel } from '../molecules/InputWithLabel';
 import { TwinInputWithLabel } from '../molecules/TwinInputWithLabel';
 import styles from './ParameterForm.module.css';
@@ -35,16 +35,16 @@ export const ParameterForm = () => {
         <h3 className={styles.sectionTitle}>タイル</h3>
         <div className={styles.arrangementRow}>
           <label className={styles.field}>
-            <span className={styles.fieldLabel}>並べ方</span>
+            <span className={styles.fieldLabel}>配置</span>
             <select
               className={styles.select}
-              value={state.renderParameter.arrangementMode}
+              value={state.renderParameter.layoutMode}
               onChange={(e) => {
-                dispatch(updateRenderParameterItem('arrangementMode', e.target.value as TileArrangementMode));
+                dispatch(updateRenderParameterItem('layoutMode', e.target.value as TileLayoutMode));
               }}
             >
-              <option value="balanced">バランスよく</option>
-              <option value="random">ランダム</option>
+              <option value="grid">グリッド</option>
+              <option value="staggered">ずらしグリッド</option>
             </select>
           </label>
           <button
@@ -72,23 +72,6 @@ export const ParameterForm = () => {
             onChangeValue2={(value) => {
               const num = parseInt(value, 10);
               dispatch(updateRenderParameterItem('itemHeight', isNaN(num) ? 0 : num));
-            }}
-          />
-
-          <TwinInputWithLabel
-            label="並べる個数"
-            type="number"
-            value1={state.renderParameter.itemSizeX}
-            value2={state.renderParameter.itemSizeY}
-            min={1}
-            max={50}
-            onChangeValue1={(value) => {
-              const num = parseInt(value, 10);
-              dispatch(updateRenderParameterItem('itemSizeX', isNaN(num) ? 0 : num));
-            }}
-            onChangeValue2={(value) => {
-              const num = parseInt(value, 10);
-              dispatch(updateRenderParameterItem('itemSizeY', isNaN(num) ? 0 : num));
             }}
           />
         </div>
