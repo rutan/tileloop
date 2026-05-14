@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useContext } from 'react';
 import { store, updateRenderParameterItem } from '../../store';
 import { TileLayoutMode } from '../../types/RenderParameter';
+import { ColorControl } from '../molecules/ColorControl';
 import { InputWithLabel } from '../molecules/InputWithLabel';
 import { TwinInputWithLabel } from '../molecules/TwinInputWithLabel';
 import styles from './ParameterForm.module.css';
@@ -117,52 +118,28 @@ export const ParameterForm = () => {
 
       <section className={styles.section}>
         <h3 className={styles.sectionTitle}>色</h3>
-        <div className={styles.grid}>
-          <InputWithLabel
-            label="背景色"
-            type="color"
-            value={state.renderParameter.bgColor}
-            onChangeValue={(value) => {
-              dispatch(updateRenderParameterItem('bgColor', value));
-            }}
-          />
-
-          <InputWithLabel
-            label="背景透明度"
-            type="number"
-            min={0}
-            max={1}
-            step={0.01}
-            value={state.renderParameter.bgOpacity}
-            onChangeValue={(value) => {
-              const num = parseFloat(value);
-              dispatch(updateRenderParameterItem('bgOpacity', isNaN(num) ? 0 : num));
-            }}
-          />
-        </div>
-        <div className={styles.grid}>
-          <InputWithLabel
-            label="カバー色"
-            type="color"
-            value={state.renderParameter.frontColor}
-            onChangeValue={(value) => {
-              dispatch(updateRenderParameterItem('frontColor', value));
-            }}
-          />
-
-          <InputWithLabel
-            label="カバー透明度"
-            type="number"
-            min={0}
-            max={1}
-            step="0.01"
-            value={state.renderParameter.frontOpacity}
-            onChangeValue={(value) => {
-              const num = parseFloat(value);
-              dispatch(updateRenderParameterItem('frontOpacity', isNaN(num) ? 0 : num));
-            }}
-          />
-        </div>
+        <ColorControl
+          title="背景"
+          color={state.renderParameter.bgColor}
+          opacity={state.renderParameter.bgOpacity}
+          onChangeColor={(value) => {
+            dispatch(updateRenderParameterItem('bgColor', value));
+          }}
+          onChangeOpacity={(value) => {
+            dispatch(updateRenderParameterItem('bgOpacity', value));
+          }}
+        />
+        <ColorControl
+          title="カバー"
+          color={state.renderParameter.frontColor}
+          opacity={state.renderParameter.frontOpacity}
+          onChangeColor={(value) => {
+            dispatch(updateRenderParameterItem('frontColor', value));
+          }}
+          onChangeOpacity={(value) => {
+            dispatch(updateRenderParameterItem('frontOpacity', value));
+          }}
+        />
       </section>
     </div>
   );
