@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { useRef } from 'react';
 import { ReactSortable } from 'react-sortablejs';
 import { readFromFile } from '../../functions/readFromFile';
-import { addPicture, removePicture, store, updateRenderParameterItem } from '../../store';
+import { addPictures, removePicture, store, updateRenderParameterItem } from '../../store';
 import { PictureItem } from '../molecules/PictureItem';
 import styles from './PictureForm.module.css';
 
@@ -12,15 +12,20 @@ export const PictureForm = () => {
   const fileRef = useRef<HTMLInputElement>(null);
 
   const loadFiles = async (files: FileList) => {
-    for (let i = 0; i < files.length; ++i) {
-      const data = await readFromFile(files[i]);
-      dispatch(
-        addPicture({
+    const imageFiles = Array.from(files).filter((file) => file.type.startsWith('image/'));
+    if (imageFiles.length === 0) return;
+
+    const pictures = await Promise.all(
+      imageFiles.map(async (file) => {
+        const data = await readFromFile(file);
+        return {
           id: crypto.randomUUID(),
           url: data,
-        }),
-      );
-    }
+        };
+      }),
+    );
+
+    dispatch(addPictures(pictures));
   };
 
   return (
@@ -38,7 +43,9 @@ export const PictureForm = () => {
       }}
     >
       <div className={styles.header}>
-        <h2 className={styles.title}>画像</h2>
+        <div>
+          <h2 className={styles.title}>画像</h2>
+        </div>
         <button
           className={styles.addButton}
           type="button"

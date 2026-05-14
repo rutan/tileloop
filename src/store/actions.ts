@@ -8,6 +8,13 @@ export const addPicture = (picture: Picture) =>
     picture,
   }) as const;
 
+export const ADD_PICTURES = 'ADD_PICTURES' as const;
+export const addPictures = (pictures: Picture[]) =>
+  ({
+    type: ADD_PICTURES,
+    pictures,
+  }) as const;
+
 export const REMOVE_PICTURE = 'REMOVE_PICTURE' as const;
 export const removePicture = (picture: Picture) =>
   ({
@@ -34,6 +41,7 @@ export function updateRenderParameterItem<T extends keyof RenderParameter>(key: 
 
 export type Actions =
   | ReturnType<typeof addPicture>
+  | ReturnType<typeof addPictures>
   | ReturnType<typeof removePicture>
   | ReturnType<typeof setResultFile>
   | ReturnType<typeof updateRenderParameterItem>;

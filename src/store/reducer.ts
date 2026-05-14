@@ -1,4 +1,11 @@
-import { Actions, ADD_PICTURE, REMOVE_PICTURE, SET_RESULT_FILE_URL, UPDATE_RENDER_PARAMETER_ITEM } from './actions';
+import {
+  Actions,
+  ADD_PICTURE,
+  ADD_PICTURES,
+  REMOVE_PICTURE,
+  SET_RESULT_FILE_URL,
+  UPDATE_RENDER_PARAMETER_ITEM,
+} from './actions';
 import { RootState } from './state';
 
 export const reducer = (state: RootState, action: Actions): RootState => {
@@ -9,6 +16,15 @@ export const reducer = (state: RootState, action: Actions): RootState => {
         renderParameter: {
           ...state.renderParameter,
           pictures: [...state.renderParameter.pictures, action.picture],
+        },
+      };
+    }
+    case ADD_PICTURES: {
+      return {
+        ...state,
+        renderParameter: {
+          ...state.renderParameter,
+          pictures: [...state.renderParameter.pictures, ...action.pictures],
         },
       };
     }
