@@ -1,10 +1,10 @@
-import * as React from 'react';
 import styled from '@emotion/styled';
+import * as React from 'react';
+import { SCREEN_WIDTH_SMARTPHONE } from '../constants';
 import { GlobalStyle } from './GlobalStyle';
+import { EditTabGroup } from './organisms/EditTabGroup';
 import { PicturePreview } from './organisms/PicturePreview';
 import { ResultModal } from './organisms/ResultModal';
-import { SCREEN_WIDTH_SMARTPHONE } from '../constants';
-import { EditTabGroup } from './organisms/EditTabGroup';
 
 const Container = styled.div`
   width: 100%;

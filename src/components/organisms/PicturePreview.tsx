@@ -1,6 +1,6 @@
-import * as React from 'react';
 import { ClassNames, css } from '@emotion/react';
 import styled from '@emotion/styled';
+import * as React from 'react';
 import { useContext, useEffect, useRef } from 'react';
 import ScrollContainer from 'react-indiana-drag-scroll';
 import { setResultFile, store } from '../../store';
@@ -90,7 +90,7 @@ export const PicturePreview = () => {
                 dispatch(setResultFile(url));
               },
               'image/png',
-              1
+              1,
             );
           };
           img.onerror = (e) => {
@@ -108,9 +108,9 @@ export const PicturePreview = () => {
       />
 
       <ClassNames>
-        {({ css }) => (
+        {(styles) => (
           <ScrollContainer
-            className={css`
+            className={styles.css`
               ${ScrollContainerStyle}
             `}
             innerRef={(element) => {

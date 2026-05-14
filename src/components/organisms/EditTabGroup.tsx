@@ -1,11 +1,9 @@
-import * as React from 'react';
-import styled from '@emotion/styled';
-import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { ClassNames, css } from '@emotion/react';
-import { useContext } from 'react';
-import { store } from '../../store';
-import { PictureForm } from './PictureForm';
+import styled from '@emotion/styled';
+import * as React from 'react';
+import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { ParameterForm } from './ParameterForm';
+import { PictureForm } from './PictureForm';
 
 const Container = styled.div`
   width: 100%;
@@ -51,31 +49,29 @@ const TabPanelStyle = css`
 `;
 
 export const EditTabGroup = () => {
-  const { state, dispatch } = useContext(store);
-
   return (
     <Container>
       <ClassNames>
-        {({ css }) => (
+        {(styles) => (
           <Tabs
-            className={css`
+            className={styles.css`
               ${TabsStyle}
             `}
           >
             <TabList
-              className={css`
+              className={styles.css`
                 ${TabListStyle}
               `}
             >
               <Tab
-                className={css`
+                className={styles.css`
                   ${TabStyle}
                 `}
               >
                 画像の選択
               </Tab>
               <Tab
-                className={css`
+                className={styles.css`
                   ${TabStyle}
                 `}
               >
@@ -83,14 +79,14 @@ export const EditTabGroup = () => {
               </Tab>
             </TabList>
             <TabPanel
-              className={css`
+              className={styles.css`
                 ${TabPanelStyle}
               `}
             >
               <PictureForm />
             </TabPanel>
             <TabPanel
-              className={css`
+              className={styles.css`
                 ${TabPanelStyle}
               `}
             >

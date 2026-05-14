@@ -1,7 +1,9 @@
+/node_modules
 /.cache
 /dist
 /public
 /tmp
+/.vite
 *.log
 
 .vercel

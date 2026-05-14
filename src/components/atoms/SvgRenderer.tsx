@@ -48,10 +48,10 @@ export const SvgRenderer = React.forwardRef(({ parameter }: Props, ref) => {
       </defs>
       <rect fill={bgColor} opacity={bgOpacity} x={-width / 2} y={-height / 2} width={width} height={height} />
       <g transform={`rotate(${rotation})`}>
-        {new Array(itemSizeY).fill(null).map((_, j) => {
+        {Array.from({ length: itemSizeY }).map((_, j) => {
           return (
             <React.Fragment key={`item-${j}`}>
-              {new Array(itemSizeX).fill(null).map((_, i) => {
+              {Array.from({ length: itemSizeX }).map((_, i) => {
                 if (pictures.length === 0) return null;
 
                 const picture = pictures[(i + j * itemSizeX) % pictures.length];

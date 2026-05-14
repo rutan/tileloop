@@ -1,5 +1,5 @@
-import { RenderParameter } from '../types/RenderParameter';
 import { sampleImage } from '../assets/sample';
+import { RenderParameter } from '../types/RenderParameter';
 
 export interface RootState {
   renderParameter: RenderParameter;

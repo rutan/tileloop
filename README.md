@@ -18,3 +18,9 @@ pnpm dev
 ```sh
 pnpm build
 ```
+
+## Lint
+
+```sh
+pnpm lint
+```

@@ -1,6 +1,6 @@
-import { RootState } from './state';
-import { Actions, ADD_PICTURE, REMOVE_PICTURE, SET_RESULT_FILE_URL, UPDATE_RENDER_PARAMETER_ITEM } from './actions';
 import { RenderParameter } from '../types/RenderParameter';
+import { Actions, ADD_PICTURE, REMOVE_PICTURE, SET_RESULT_FILE_URL, UPDATE_RENDER_PARAMETER_ITEM } from './actions';
+import { RootState } from './state';
 
 export const reducer = (state: RootState, action: Actions): RootState => {
   switch (action.type) {

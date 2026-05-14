@@ -1,11 +1,11 @@
 import { createContext, default as React, useReducer } from 'react';
-import { initialState } from './state';
 import { Actions } from './actions';
 import { reducer } from './reducer';
+import { initialState } from './state';
 
 export const store = createContext({
   state: initialState,
-  dispatch: (action: Actions) => {},
+  dispatch: (_action: Actions) => {},
 });
 const { Provider: StoreProvider } = store;
 

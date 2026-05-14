@@ -1,5 +1,5 @@
-import * as React from 'react';
 import styled from '@emotion/styled';
+import * as React from 'react';
 import { MdClose } from 'react-icons/md';
 import { Picture } from '../../types/Picture';
 

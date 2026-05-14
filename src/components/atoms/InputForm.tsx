@@ -1,5 +1,5 @@
-import * as React from 'react';
 import styled from '@emotion/styled';
+import * as React from 'react';
 
 export interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   onChangeValue?: (value: string) => void;

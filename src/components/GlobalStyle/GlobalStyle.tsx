@@ -1,7 +1,7 @@
-import * as React from 'react';
 import { Global } from '@emotion/react';
-import { resetCss } from './resetCss';
+import * as React from 'react';
 import { globalCss } from './globalCss';
+import { resetCss } from './resetCss';
 
 export const GlobalStyle = () => (
   <React.Fragment>

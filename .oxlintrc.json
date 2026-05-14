@@ -1,0 +1,22 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "env": {
+    "browser": true,
+    "es2024": true
+  },
+  "plugins": ["react", "jsx-a11y"],
+  "rules": {
+    "no-undef": "off",
+    "preserve-caught-error": "off",
+    "typescript/no-explicit-any": "off",
+    "no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_"
+      }
+    ]
+  },
+  "options": {
+    "typeAware": true
+  }
+}

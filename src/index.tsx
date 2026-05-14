@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
-import { Provider } from './store';
 import { App } from './components/App';
+import { Provider } from './store';
 
 (() => {
   const rootElement = document.getElementById('root');
@@ -12,6 +12,6 @@ import { App } from './components/App';
   createRoot(rootElement).render(
     <Provider>
       <App />
-    </Provider>
+    </Provider>,
   );
 })();
