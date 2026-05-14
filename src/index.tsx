@@ -1,15 +1,17 @@
-import 'regenerator-runtime/runtime';
-
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Provider } from './store';
 import { App } from './components/App';
 
 (() => {
-  ReactDOM.render(
+  const rootElement = document.getElementById('root');
+  if (!rootElement) {
+    throw new Error('Root element was not found.');
+  }
+
+  createRoot(rootElement).render(
     <Provider>
       <App />
-    </Provider>,
-    document.getElementById('root')
+    </Provider>
   );
 })();

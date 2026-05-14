@@ -42,7 +42,7 @@ const ScrollContainerInner = styled.div<{ width: number; height: number }>`
 
 export const PicturePreview = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const scrollContainerRef = useRef<ScrollContainer>(null);
+  const scrollElementRef = useRef<HTMLElement | null>(null);
   const innerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const dummyCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -52,9 +52,8 @@ export const PicturePreview = () => {
     const container = containerRef.current;
     if (!container) return;
 
-    const scrollContainer = scrollContainerRef.current;
-    if (!scrollContainer) return;
-    const element = scrollContainer.getElement();
+    const element = scrollElementRef.current;
+    if (!element) return;
 
     const innerElement = innerRef.current;
     if (!innerElement) return;
@@ -77,7 +76,7 @@ export const PicturePreview = () => {
           img.src = `data:image/svg+xml;base64,${btoa(svg.outerHTML)}`;
           img.onload = () => {
             const ctx = dummyCanvas.getContext('2d');
-            if (!ctx) throw 'broken canvas context';
+            if (!ctx) throw new Error('Broken canvas context.');
             dummyCanvas.width = state.renderParameter.width;
             dummyCanvas.height = state.renderParameter.height;
             ctx.clearRect(0, 0, dummyCanvas.width, dummyCanvas.height);
@@ -85,6 +84,8 @@ export const PicturePreview = () => {
 
             dummyCanvas.toBlob(
               (blob) => {
+                if (!blob) return;
+
                 const url = URL.createObjectURL(blob);
                 dispatch(setResultFile(url));
               },
@@ -112,7 +113,9 @@ export const PicturePreview = () => {
             className={css`
               ${ScrollContainerStyle}
             `}
-            ref={scrollContainerRef}
+            innerRef={(element) => {
+              scrollElementRef.current = element;
+            }}
           >
             <ScrollContainerInner
               width={state.renderParameter.width}

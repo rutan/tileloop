@@ -9,7 +9,7 @@ export const store = createContext({
 });
 const { Provider: StoreProvider } = store;
 
-export const Provider: React.FC = ({ children }) => {
+export const Provider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return <StoreProvider value={{ state, dispatch }}>{children}</StoreProvider>;
