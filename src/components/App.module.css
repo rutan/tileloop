@@ -17,9 +17,13 @@
   z-index: 10;
   width: 50%;
   height: 100%;
-  overflow: auto;
+  overflow: hidden;
   background: #fff;
   box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+}
+
+.canvas {
+  display: none;
 }
 
 @media (width <= 800px) {

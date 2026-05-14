@@ -1,15 +1,17 @@
 import * as React from 'react';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { setResultFile, store } from '../../store';
+import { store } from '../../store';
 import { SvgRenderer } from '../atoms/SvgRenderer';
 import styles from './PicturePreview.module.css';
 
-export const PicturePreview = () => {
+interface Props {
+  svgRef: React.RefObject<SVGSVGElement>;
+}
+
+export const PicturePreview: React.FC<Props> = ({ svgRef }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollElementRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
-  const svgRef = useRef<SVGSVGElement>(null);
-  const dummyCanvasRef = useRef<HTMLCanvasElement>(null);
   const dragRef = useRef({
     active: false,
     startX: 0,
@@ -18,7 +20,7 @@ export const PicturePreview = () => {
     scrollTop: 0,
   });
   const [dragging, setDragging] = useState(false);
-  const { state, dispatch } = useContext(store);
+  const { state } = useContext(store);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -38,44 +40,6 @@ export const PicturePreview = () => {
 
   return (
     <div className={styles.container} ref={containerRef}>
-      <button
-        className={styles.downloadButton}
-        type="button"
-        onClick={() => {
-          const svg = svgRef.current;
-          const dummyCanvas = dummyCanvasRef.current;
-          if (!svg || !dummyCanvas) return;
-
-          const img = new Image();
-          img.src = `data:image/svg+xml;base64,${btoa(svg.outerHTML)}`;
-          img.onload = () => {
-            const ctx = dummyCanvas.getContext('2d');
-            if (!ctx) throw new Error('Broken canvas context.');
-            dummyCanvas.width = state.renderParameter.width;
-            dummyCanvas.height = state.renderParameter.height;
-            ctx.clearRect(0, 0, dummyCanvas.width, dummyCanvas.height);
-            ctx.drawImage(img, 0, 0, dummyCanvas.width, dummyCanvas.height);
-
-            dummyCanvas.toBlob(
-              (blob) => {
-                if (!blob) return;
-
-                const url = URL.createObjectURL(blob);
-                dispatch(setResultFile(url));
-              },
-              'image/png',
-              1,
-            );
-          };
-          img.onerror = (e) => {
-            console.error(e);
-          };
-        }}
-      >
-        完成！
-      </button>
-      <canvas className={styles.canvas} ref={dummyCanvasRef} />
-
       <div
         className={[styles.scrollArea, dragging ? styles.dragging : ''].filter(Boolean).join(' ')}
         ref={scrollElementRef}

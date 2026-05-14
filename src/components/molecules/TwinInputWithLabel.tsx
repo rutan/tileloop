@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useState } from 'react';
 import { InputForm, Props as InputFormProps } from '../atoms/InputForm';
 import styles from './TwinInputWithLabel.module.css';
 
@@ -22,36 +21,14 @@ export const TwinInputWithLabel: React.FC<Props> = ({
   onChangeValue2,
   ...props
 }) => {
-  const [isFocus, dispatchIsFocus] = useState(false);
-
   return (
-    <div className={[styles.container, isFocus ? styles.focus : '', className].filter(Boolean).join(' ')}>
+    <div className={[styles.container, className].filter(Boolean).join(' ')}>
       <label className={styles.label}>{label}</label>
-      <InputForm
-        className={styles.input}
-        onFocus={() => {
-          dispatchIsFocus(true);
-        }}
-        onBlur={() => {
-          dispatchIsFocus(false);
-        }}
-        {...props}
-        value={value1}
-        onChangeValue={onChangeValue1}
-      />
-      <div className={styles.separator}>×</div>
-      <InputForm
-        className={styles.input}
-        onFocus={() => {
-          dispatchIsFocus(true);
-        }}
-        onBlur={() => {
-          dispatchIsFocus(false);
-        }}
-        {...props}
-        value={value2}
-        onChangeValue={onChangeValue2}
-      />
+      <div className={styles.inputs}>
+        <InputForm className={styles.input} {...props} value={value1} onChangeValue={onChangeValue1} />
+        <div className={styles.separator}>×</div>
+        <InputForm className={styles.input} {...props} value={value2} onChangeValue={onChangeValue2} />
+      </div>
     </div>
   );
 };

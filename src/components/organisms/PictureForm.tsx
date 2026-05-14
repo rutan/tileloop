@@ -37,6 +37,20 @@ export const PictureForm = () => {
         void loadFiles(e.dataTransfer.files);
       }}
     >
+      <div className={styles.header}>
+        <h2 className={styles.title}>画像</h2>
+        <button
+          className={styles.addButton}
+          type="button"
+          onClick={() => {
+            const fileEl = fileRef.current;
+            if (!fileEl) return;
+            fileEl.click();
+          }}
+        >
+          画像を追加
+        </button>
+      </div>
       <input
         className={styles.fileInput}
         type="file"
@@ -75,17 +89,6 @@ export const PictureForm = () => {
           />
         ))}
       </ReactSortable>
-      <button
-        className={styles.addButton}
-        type="button"
-        onClick={() => {
-          const fileEl = fileRef.current;
-          if (!fileEl) return;
-          fileEl.click();
-        }}
-      >
-        画像を追加する
-      </button>
     </div>
   );
 };
