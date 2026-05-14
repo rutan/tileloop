@@ -77,6 +77,9 @@ export function createTilePlacements(parameter: TilePlacementParameter): TilePla
   const coverSize = Math.hypot(width, height);
   const columns = Math.max(1, Math.ceil(coverSize / tileStepX) + 2);
   const rows = Math.max(1, Math.ceil(coverSize / tileStepY) + (layoutMode === 'staggered' ? 3 : 2));
+  const originColumn = Math.floor(columns / 2);
+  const originRow = Math.floor(rows / 2);
+  const originStaggerOffset = layoutMode === 'staggered' && originColumn % 2 === 1 ? tileStepY / 2 : 0;
   const random = createRandom(
     `${arrangementSeed}:${layoutMode}:${columns}:${rows}:${pictures.map((picture) => picture.id).join(',')}`,
   );
@@ -100,8 +103,8 @@ export function createTilePlacements(parameter: TilePlacementParameter): TilePla
     return {
       id: `tile-${x}-${y}-${pictures[pictureIndex].id}`,
       picture: pictures[pictureIndex],
-      x: (x - columns / 2) * tileStepX,
-      y: (y - rows / 2) * tileStepY + staggerOffset,
+      x: (x - originColumn) * tileStepX - itemWidth / 2,
+      y: (y - originRow) * tileStepY + staggerOffset - originStaggerOffset - itemHeight / 2,
     };
   });
 }
