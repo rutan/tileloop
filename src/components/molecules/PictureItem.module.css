@@ -4,27 +4,25 @@
   border: 1px solid #eee;
   width: 100%;
   aspect-ratio: 1;
-  border-radius: 6px;
-  padding: 8px;
+  border-radius: 50vh;
 }
 
 .thumbnail {
   width: 100%;
   height: 100%;
   background: #f1f1f1 no-repeat center center;
-  background-size: contain;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
+  background-size: cover;
+  border-radius: 50vh;
 }
 
 .removeButton {
   position: absolute;
-  right: 6px;
-  top: 6px;
+  right: 0;
+  top: 0;
   width: 32px;
   height: 32px;
   background: #fff;
-  border-radius: 100%;
+  border-radius: 50vh;
   box-shadow: 0 0 5px rgb(0 0 0 / 20%);
   display: flex;
   flex-direction: column;
@@ -33,13 +31,15 @@
   transition: all 0.2s ease-in-out;
 }
 
-.removeButton:hover {
-  background: #f33;
-  color: #fff;
+.removeIcon {
+  width: 18px;
+  height: 18px;
+  display: block;
 }
 
-.removeButton::before {
-  content: '×';
-  font-size: 22px;
-  line-height: 1;
+@media (hover: hover) and (pointer: fine) {
+  .removeButton:hover {
+    background: #f33;
+    color: #fff;
+  }
 }

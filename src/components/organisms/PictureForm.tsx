@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { useContext } from 'react';
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
 import { addPictures, removeAllPictures, removePicture, store } from '../../store';
+import { ActionRow } from '../molecules/ActionRow';
+import { PanelButton } from '../molecules/PanelButton';
 import { PictureItem } from '../molecules/PictureItem';
 import styles from './PictureForm.module.css';
 
@@ -35,36 +35,6 @@ export const PictureForm = () => {
         loadFiles(e.dataTransfer.files);
       }}
     >
-      <div className={styles.header}>
-        <div>
-          <h2 className={styles.title}>画像</h2>
-        </div>
-        <div className={styles.actions}>
-          <button
-            className={styles.clearButton}
-            type="button"
-            disabled={state.renderParameter.pictures.length === 0}
-            onClick={() => {
-              const confirmed = window.confirm('すべての画像を削除しますか？');
-              if (!confirmed) return;
-              dispatch(removeAllPictures());
-            }}
-          >
-            すべて削除
-          </button>
-          <button
-            className={styles.addButton}
-            type="button"
-            onClick={() => {
-              const fileEl = fileRef.current;
-              if (!fileEl) return;
-              fileEl.click();
-            }}
-          >
-            画像を追加
-          </button>
-        </div>
-      </div>
       <input
         className={styles.fileInput}
         type="file"
@@ -91,6 +61,31 @@ export const PictureForm = () => {
           />
         ))}
       </div>
+      <ActionRow className={styles.actions}>
+        <PanelButton
+          variant="danger"
+          type="button"
+          disabled={state.renderParameter.pictures.length === 0}
+          onClick={() => {
+            const confirmed = window.confirm('すべての画像を削除しますか？');
+            if (!confirmed) return;
+            dispatch(removeAllPictures());
+          }}
+        >
+          すべて削除
+        </PanelButton>
+        <PanelButton
+          variant="success"
+          type="button"
+          onClick={() => {
+            const fileEl = fileRef.current;
+            if (!fileEl) return;
+            fileEl.click();
+          }}
+        >
+          画像を追加
+        </PanelButton>
+      </ActionRow>
     </div>
   );
 };

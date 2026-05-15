@@ -1,0 +1,56 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(10px);
+  border-radius: 50vh;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 12%);
+}
+
+.title {
+  display: none;
+  min-width: 0;
+  margin: 0;
+  color: #222;
+  font-size: 16px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.helpButton {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #fff;
+  color: #333;
+}
+
+.helpIcon {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .helpButton:hover {
+    border-color: #0288d1;
+    color: #0288d1;
+  }
+}
+
+@media (width >= 801px) {
+  .container {
+    padding: 8px 10px 8px 14px;
+  }
+
+  .title {
+    display: block;
+  }
+}

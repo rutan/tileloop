@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { forwardRef, useMemo } from 'react';
 import { createTilePlacements } from '../../functions/createTilePlacements';
 import { RenderParameter } from '../../types/RenderParameter';
 
@@ -6,7 +6,7 @@ interface Props {
   parameter: RenderParameter;
 }
 
-export const SvgRenderer = React.forwardRef<SVGSVGElement, Props>(({ parameter }, ref) => {
+export const SvgRenderer = forwardRef<SVGSVGElement, Props>(({ parameter }, ref) => {
   const {
     width,
     height,
@@ -28,7 +28,7 @@ export const SvgRenderer = React.forwardRef<SVGSVGElement, Props>(({ parameter }
     layoutMode,
     arrangementSeed,
   } = parameter;
-  const placements = React.useMemo(
+  const placements = useMemo(
     () =>
       createTilePlacements({
         pictures,

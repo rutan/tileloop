@@ -1,10 +1,9 @@
-import * as React from 'react';
 import { useContext, useRef, useState } from 'react';
 import { setResultFile, store } from '../store';
 import styles from './App.module.css';
 import { EditPanel } from './organisms/EditPanel';
+import { Header } from './organisms/Header';
 import { PicturePreview } from './organisms/PicturePreview';
-import { ResultModal } from './organisms/ResultModal';
 
 const svgNamespace = 'http://www.w3.org/2000/svg';
 const xlinkNamespace = 'http://www.w3.org/1999/xlink';
@@ -174,6 +173,9 @@ export const App = () => {
 
   return (
     <div className={styles.container}>
+      <div className={styles.headerArea}>
+        <Header />
+      </div>
       <div className={styles.previewArea}>
         <PicturePreview svgRef={svgRef} />
       </div>
@@ -181,7 +183,6 @@ export const App = () => {
         <EditPanel isExporting={isExporting} onExport={exportPng} />
       </div>
       <canvas className={styles.canvas} ref={canvasRef} />
-      <ResultModal />
     </div>
   );
 };

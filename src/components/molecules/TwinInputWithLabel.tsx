@@ -1,6 +1,7 @@
-import * as React from 'react';
+import { X } from 'lucide-react';
+import { FC } from 'react';
 import { InputForm, Props as InputFormProps } from '../atoms/InputForm';
-import styles from './TwinInputWithLabel.module.css';
+import styles from './FormField.module.css';
 
 interface Props extends InputFormProps {
   className?: string;
@@ -12,7 +13,7 @@ interface Props extends InputFormProps {
   onChangeValue2: (value: string) => void;
 }
 
-export const TwinInputWithLabel: React.FC<Props> = ({
+export const TwinInputWithLabel: FC<Props> = ({
   className,
   label,
   value1,
@@ -24,10 +25,12 @@ export const TwinInputWithLabel: React.FC<Props> = ({
   return (
     <div className={[styles.container, className].filter(Boolean).join(' ')}>
       <label className={styles.label}>{label}</label>
-      <div className={styles.inputs}>
-        <InputForm className={styles.input} {...props} value={value1} onChangeValue={onChangeValue1} />
-        <div className={styles.separator}>×</div>
-        <InputForm className={styles.input} {...props} value={value2} onChangeValue={onChangeValue2} />
+      <div className={styles.twinInputs}>
+        <InputForm className={styles.control} {...props} value={value1} onChangeValue={onChangeValue1} />
+        <div className={styles.separator} aria-hidden="true">
+          <X className={styles.separatorIcon} strokeWidth={2.2} />
+        </div>
+        <InputForm className={styles.control} {...props} value={value2} onChangeValue={onChangeValue2} />
       </div>
     </div>
   );

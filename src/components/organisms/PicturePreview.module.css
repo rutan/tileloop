@@ -3,14 +3,22 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
+  overscroll-behavior-y: none;
 }
 
 .scrollArea {
   width: 100%;
   height: 100%;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  overflow-anchor: none;
   cursor: grab;
   user-select: none;
+}
+
+.scrollArea::-webkit-scrollbar {
+  display: none;
 }
 
 .dragging {
@@ -20,7 +28,9 @@
 .scrollContainerInner {
   min-width: 100%;
   min-height: 100%;
-  padding: 100px;
+  padding-block-start: max(82px, 50dvh);
+  padding-block-end: calc(min(54dvh, 430px) + max(96px, 50dvh));
+  padding-inline: max(48px, 50dvw);
   box-sizing: content-box;
   display: flex;
   flex-direction: column;
@@ -42,17 +52,18 @@
 
 .zoomToolbar {
   position: absolute;
-  right: 16px;
-  bottom: 16px;
+  right: 10px;
+  top: max(10px, env(safe-area-inset-top));
   z-index: 1;
   display: flex;
   align-items: center;
-  gap: 8px;
-  max-width: calc(100% - 32px);
-  padding: 8px;
+  gap: 6px;
+  max-width: calc(100% - 20px);
+  padding: 6px;
   border: 1px solid rgb(0 0 0 / 12%);
-  border-radius: 8px;
-  background: rgb(255 255 255 / 92%);
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(10px);
+  border-radius: 50vh;
   box-shadow: 0 2px 8px rgb(0 0 0 / 12%);
 }
 
@@ -60,19 +71,18 @@
   flex: 0 0 auto;
   width: 32px;
   height: 32px;
-  border: 1px solid #cfcfcf;
-  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50vh;
   background: #fff;
   color: #333;
-  font-size: 18px;
-  line-height: 1;
-  font-weight: 700;
 }
 
-.zoomButton:hover:not(:disabled),
-.zoomResetButton:hover {
-  border-color: #0288d1;
-  color: #0288d1;
+.zoomIcon {
+  width: 18px;
+  height: 18px;
+  display: block;
 }
 
 .zoomButton:disabled {
@@ -80,20 +90,12 @@
   opacity: 0.45;
 }
 
-.zoomRange {
-  flex: 1 1 120px;
-  width: 120px;
-  min-width: 80px;
-  accent-color: #0288d1;
-}
-
 .zoomResetButton {
   flex: 0 0 auto;
   min-width: 58px;
   height: 32px;
   padding: 0 8px;
-  border: 1px solid #cfcfcf;
-  border-radius: 6px;
+  border-radius: 50vh;
   background: #fff;
   color: #333;
   font-size: 13px;
@@ -101,17 +103,17 @@
   font-weight: 700;
 }
 
-@media (width <= 800px) {
-  .zoomToolbar {
-    right: 10px;
-    bottom: 10px;
-    gap: 6px;
-    max-width: calc(100% - 20px);
-    padding: 6px;
-  }
+.zoomRange {
+  flex: 1 1 120px;
+  width: 120px;
+  min-width: 80px;
+  display: none;
+  accent-color: #0288d1;
+}
 
-  .zoomRange {
-    flex-basis: 96px;
-    width: 96px;
+@media (hover: hover) and (pointer: fine) {
+  .zoomButton:hover:not(:disabled),
+  .zoomResetButton:hover {
+    color: #0288d1;
   }
 }

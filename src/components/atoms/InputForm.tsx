@@ -1,10 +1,10 @@
-import * as React from 'react';
+import { FC, InputHTMLAttributes } from 'react';
 
-export interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   onChangeValue?: (value: string) => void;
 }
 
-export const InputForm: React.FC<Props> = ({ className, onChangeValue, ...props }) => {
+export const InputForm: FC<Props> = ({ className, onChangeValue, ...props }) => {
   return (
     <input
       {...props}

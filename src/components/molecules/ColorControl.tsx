@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styles from './ColorControl.module.css';
 
 interface Props {
@@ -16,7 +15,7 @@ function clampOpacity(value: number): number {
   return Math.min(1, Math.max(0, value));
 }
 
-export const ColorControl: React.FC<Props> = ({ title, color, opacity, onChangeColor, onChangeOpacity }) => {
+export const ColorControl: FC<Props> = ({ title, color, opacity, onChangeColor, onChangeOpacity }) => {
   const [draftColor, setDraftColor] = useState(color);
   const opacityPercent = Math.round(clampOpacity(opacity) * 100);
 

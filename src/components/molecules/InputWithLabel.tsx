@@ -1,6 +1,6 @@
-import * as React from 'react';
+import { FC } from 'react';
 import { InputForm, Props as InputFormProps } from '../atoms/InputForm';
-import styles from './InputWithLabel.module.css';
+import styles from './FormField.module.css';
 
 interface Props extends InputFormProps {
   className?: string;
@@ -8,11 +8,11 @@ interface Props extends InputFormProps {
   type?: string;
 }
 
-export const InputWithLabel: React.FC<Props> = ({ className, label, ...props }) => {
+export const InputWithLabel: FC<Props> = ({ className, label, ...props }) => {
   return (
     <div className={[styles.container, className].filter(Boolean).join(' ')}>
       <label className={styles.label}>{label}</label>
-      <InputForm className={styles.input} {...props} />
+      <InputForm className={styles.control} {...props} />
     </div>
   );
 };

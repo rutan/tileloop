@@ -1,5 +1,15 @@
-import * as React from 'react';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { ZoomIn, ZoomOut } from 'lucide-react';
+import {
+  FC,
+  RefObject,
+  TouchEvent as ReactTouchEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import { store } from '../../store';
 import { SvgRenderer } from '../atoms/SvgRenderer';
 import styles from './PicturePreview.module.css';
@@ -7,26 +17,71 @@ import styles from './PicturePreview.module.css';
 const MIN_ZOOM = 0.1;
 const MAX_ZOOM = 4;
 const ZOOM_STEP = 0.1;
-const PREVIEW_PADDING = 100;
 
 interface Props {
-  svgRef: React.RefObject<SVGSVGElement>;
+  svgRef: RefObject<SVGSVGElement>;
+}
+
+interface Touches {
+  item(index: number): { clientX: number; clientY: number } | null;
 }
 
 function normalizeZoom(value: number): number {
   return Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, Math.round(value * 100) / 100));
 }
 
-export const PicturePreview: React.FC<Props> = ({ svgRef }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
+function getScrollOffset(container: HTMLElement, element: HTMLElement) {
+  const containerRect = container.getBoundingClientRect();
+  const elementRect = element.getBoundingClientRect();
+
+  return {
+    left: elementRect.left - containerRect.left + container.scrollLeft,
+    top: elementRect.top - containerRect.top + container.scrollTop,
+  };
+}
+
+function getTouchDistance(touches: Touches) {
+  const firstTouch = touches.item(0);
+  const secondTouch = touches.item(1);
+  if (!firstTouch || !secondTouch) return 0;
+
+  return Math.hypot(firstTouch.clientX - secondTouch.clientX, firstTouch.clientY - secondTouch.clientY);
+}
+
+function getTouchCenter(touches: Touches) {
+  const firstTouch = touches.item(0);
+  const secondTouch = touches.item(1);
+
+  return {
+    x: ((firstTouch?.clientX ?? 0) + (secondTouch?.clientX ?? 0)) / 2,
+    y: ((firstTouch?.clientY ?? 0) + (secondTouch?.clientY ?? 0)) / 2,
+  };
+}
+
+export const PicturePreview: FC<Props> = ({ svgRef }) => {
   const scrollElementRef = useRef<HTMLDivElement>(null);
-  const innerRef = useRef<HTMLDivElement>(null);
+  const previewSurfaceRef = useRef<HTMLDivElement>(null);
+  const zoomRef = useRef(1);
+  const zoomAnchorRef = useRef<{
+    imageCenterX: number;
+    imageCenterY: number;
+    clientX: number;
+    clientY: number;
+  } | null>(null);
   const dragRef = useRef({
     active: false,
+    pointerId: -1,
     startX: 0,
     startY: 0,
     scrollLeft: 0,
     scrollTop: 0,
+  });
+  const pinchRef = useRef({
+    active: false,
+    startDistance: 0,
+    startZoom: 1,
+    imageCenterX: 0,
+    imageCenterY: 0,
   });
   const [dragging, setDragging] = useState(false);
   const [zoom, setZoom] = useState(1);
@@ -35,59 +90,189 @@ export const PicturePreview: React.FC<Props> = ({ svgRef }) => {
   const previewHeight = state.renderParameter.height * zoom;
   const zoomPercent = Math.round(zoom * 100);
 
-  const updateZoom = React.useCallback(
-    (value: number) => {
+  const updateZoomAtClientPoint = useCallback(
+    (value: number, imageCenterX: number, imageCenterY: number, clientX: number, clientY: number) => {
       const nextZoom = normalizeZoom(value);
       const element = scrollElementRef.current;
 
       if (!element) {
+        zoomRef.current = nextZoom;
         setZoom(nextZoom);
         return;
       }
 
+      zoomRef.current = nextZoom;
+      setZoom(nextZoom);
+
+      zoomAnchorRef.current = { imageCenterX, imageCenterY, clientX, clientY };
+    },
+    [],
+  );
+
+  const updateZoom = useCallback(
+    (value: number) => {
+      const nextZoom = normalizeZoom(value);
+      const element = scrollElementRef.current;
+      const previewSurface = previewSurfaceRef.current;
+
+      if (!element || !previewSurface) {
+        zoomRef.current = nextZoom;
+        setZoom(nextZoom);
+        return;
+      }
+
+      const previewOffset = getScrollOffset(element, previewSurface);
       const centerX = element.scrollLeft + element.clientWidth / 2;
       const centerY = element.scrollTop + element.clientHeight / 2;
-      const imageCenterX = (centerX - PREVIEW_PADDING) / zoom;
-      const imageCenterY = (centerY - PREVIEW_PADDING) / zoom;
+      const imageCenterX = (centerX - previewOffset.left) / zoomRef.current;
+      const imageCenterY = (centerY - previewOffset.top) / zoomRef.current;
+      const containerRect = element.getBoundingClientRect();
 
-      setZoom(nextZoom);
-      requestAnimationFrame(() => {
-        element.scrollTo(
-          imageCenterX * nextZoom + PREVIEW_PADDING - element.clientWidth / 2,
-          imageCenterY * nextZoom + PREVIEW_PADDING - element.clientHeight / 2,
-        );
-      });
+      updateZoomAtClientPoint(
+        nextZoom,
+        imageCenterX,
+        imageCenterY,
+        containerRect.left + element.clientWidth / 2,
+        containerRect.top + element.clientHeight / 2,
+      );
     },
-    [zoom],
+    [updateZoomAtClientPoint],
+  );
+
+  const startPinch = useCallback((touches: Touches) => {
+    const element = scrollElementRef.current;
+    const previewSurface = previewSurfaceRef.current;
+    if (!element || !previewSurface) return;
+
+    const startDistance = getTouchDistance(touches);
+    if (startDistance <= 0) return;
+
+    const center = getTouchCenter(touches);
+    const containerRect = element.getBoundingClientRect();
+    const previewOffset = getScrollOffset(element, previewSurface);
+    const currentZoom = zoomRef.current;
+
+    pinchRef.current = {
+      active: true,
+      startDistance,
+      startZoom: currentZoom,
+      imageCenterX: (element.scrollLeft + center.x - containerRect.left - previewOffset.left) / currentZoom,
+      imageCenterY: (element.scrollTop + center.y - containerRect.top - previewOffset.top) / currentZoom,
+    };
+    dragRef.current.active = false;
+    setDragging(false);
+  }, []);
+
+  const handleTouchStart = useCallback(
+    (event: ReactTouchEvent<HTMLDivElement>) => {
+      if (event.touches.length < 2) return;
+
+      event.preventDefault();
+      startPinch(event.touches);
+    },
+    [startPinch],
+  );
+
+  const handleTouchMove = useCallback(
+    (event: ReactTouchEvent<HTMLDivElement>) => {
+      const pinch = pinchRef.current;
+      if (!pinch.active || event.touches.length < 2) return;
+
+      event.preventDefault();
+      const distance = getTouchDistance(event.touches);
+      if (distance <= 0) return;
+
+      const center = getTouchCenter(event.touches);
+      updateZoomAtClientPoint(
+        pinch.startZoom * (distance / pinch.startDistance),
+        pinch.imageCenterX,
+        pinch.imageCenterY,
+        center.x,
+        center.y,
+      );
+    },
+    [updateZoomAtClientPoint],
+  );
+
+  const handleTouchEnd = useCallback(
+    (event: ReactTouchEvent<HTMLDivElement>) => {
+      if (event.touches.length >= 2) {
+        startPinch(event.touches);
+        return;
+      }
+
+      pinchRef.current.active = false;
+    },
+    [startPinch],
   );
 
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
     const element = scrollElementRef.current;
     if (!element) return;
 
-    const innerElement = innerRef.current;
-    if (!innerElement) return;
+    const previewSurface = previewSurfaceRef.current;
+    if (!previewSurface) return;
 
-    const containerRect = container.getBoundingClientRect();
-    const innerRect = innerElement.getBoundingClientRect();
+    const previewOffset = getScrollOffset(element, previewSurface);
 
-    element.scrollTo(innerRect.width / 2 - containerRect.width / 2, innerRect.height / 2 - containerRect.height / 2);
+    element.scrollTo({
+      left: previewOffset.left + previewSurface.offsetWidth / 2 - element.clientWidth / 2,
+      top: previewOffset.top + previewSurface.offsetHeight / 2 - element.clientHeight / 2,
+    });
   }, [state.renderParameter.width, state.renderParameter.height]);
 
+  useEffect(() => {
+    zoomRef.current = zoom;
+  }, [zoom]);
+
+  useLayoutEffect(() => {
+    const zoomAnchor = zoomAnchorRef.current;
+    if (!zoomAnchor) return;
+
+    const element = scrollElementRef.current;
+    const previewSurface = previewSurfaceRef.current;
+    if (!element || !previewSurface) return;
+
+    zoomAnchorRef.current = null;
+
+    const containerRect = element.getBoundingClientRect();
+    const previewOffset = getScrollOffset(element, previewSurface);
+    element.scrollTo({
+      left: previewOffset.left + zoomAnchor.imageCenterX * zoom - (zoomAnchor.clientX - containerRect.left),
+      top: previewOffset.top + zoomAnchor.imageCenterY * zoom - (zoomAnchor.clientY - containerRect.top),
+    });
+  }, [zoom]);
+
+  useEffect(() => {
+    const element = scrollElementRef.current;
+    if (!element) return;
+
+    const preventBrowserPinch = (event: TouchEvent) => {
+      if (event.touches.length >= 2) {
+        event.preventDefault();
+      }
+    };
+
+    element.addEventListener('touchmove', preventBrowserPinch, { passive: false });
+
+    return () => {
+      element.removeEventListener('touchmove', preventBrowserPinch);
+    };
+  }, []);
+
   return (
-    <div className={styles.container} ref={containerRef}>
+    <div className={styles.container}>
       <div
         className={[styles.scrollArea, dragging ? styles.dragging : ''].filter(Boolean).join(' ')}
         ref={scrollElementRef}
         onPointerDown={(e) => {
-          if (e.button !== 0) return;
+          if (e.pointerType === 'touch') return;
+          if (e.pointerType === 'mouse' && e.button !== 0) return;
 
           const element = e.currentTarget;
           dragRef.current = {
             active: true,
+            pointerId: e.pointerId,
             startX: e.clientX,
             startY: e.clientY,
             scrollLeft: element.scrollLeft,
@@ -98,14 +283,14 @@ export const PicturePreview: React.FC<Props> = ({ svgRef }) => {
         }}
         onPointerMove={(e) => {
           const drag = dragRef.current;
-          if (!drag.active) return;
+          if (!drag.active || drag.pointerId !== e.pointerId) return;
 
           const element = e.currentTarget;
           element.scrollLeft = drag.scrollLeft - (e.clientX - drag.startX);
           element.scrollTop = drag.scrollTop - (e.clientY - drag.startY);
         }}
         onPointerUp={(e) => {
-          if (!dragRef.current.active) return;
+          if (!dragRef.current.active || dragRef.current.pointerId !== e.pointerId) return;
 
           dragRef.current.active = false;
           if (e.currentTarget.hasPointerCapture(e.pointerId)) {
@@ -113,10 +298,16 @@ export const PicturePreview: React.FC<Props> = ({ svgRef }) => {
           }
           setDragging(false);
         }}
-        onPointerCancel={() => {
+        onPointerCancel={(e) => {
+          if (!dragRef.current.active || dragRef.current.pointerId !== e.pointerId) return;
+
           dragRef.current.active = false;
           setDragging(false);
         }}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
         onWheel={(e) => {
           if (!e.ctrlKey) return;
 
@@ -130,7 +321,6 @@ export const PicturePreview: React.FC<Props> = ({ svgRef }) => {
             width: `${previewWidth}px`,
             height: `${previewHeight}px`,
           }}
-          ref={innerRef}
         >
           <div
             className={styles.previewSurface}
@@ -138,6 +328,7 @@ export const PicturePreview: React.FC<Props> = ({ svgRef }) => {
               width: `${previewWidth}px`,
               height: `${previewHeight}px`,
             }}
+            ref={previewSurfaceRef}
           >
             <div
               className={styles.previewScale}
@@ -162,7 +353,7 @@ export const PicturePreview: React.FC<Props> = ({ svgRef }) => {
             updateZoom(zoom - ZOOM_STEP);
           }}
         >
-          -
+          <ZoomOut className={styles.zoomIcon} aria-hidden="true" strokeWidth={2.4} />
         </button>
         <input
           className={styles.zoomRange}
@@ -185,7 +376,7 @@ export const PicturePreview: React.FC<Props> = ({ svgRef }) => {
             updateZoom(zoom + ZOOM_STEP);
           }}
         >
-          +
+          <ZoomIn className={styles.zoomIcon} aria-hidden="true" strokeWidth={2.4} />
         </button>
         <button
           className={styles.zoomResetButton}

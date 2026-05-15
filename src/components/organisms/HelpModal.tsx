@@ -1,12 +1,14 @@
-import * as React from 'react';
+import { X } from 'lucide-react';
+import { FC, Fragment, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import styles from './HelpModal.module.css';
 
 interface Props {
   onClose: () => void;
 }
 
-export const HelpModal: React.FC<Props> = ({ onClose }) => {
-  React.useEffect(() => {
+export const HelpModal: FC<Props> = ({ onClose }) => {
+  useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         onClose();
@@ -19,16 +21,18 @@ export const HelpModal: React.FC<Props> = ({ onClose }) => {
     };
   }, [onClose]);
 
-  return (
-    <React.Fragment>
+  if (typeof document === 'undefined') return null;
+
+  return createPortal(
+    <Fragment>
       <button className={styles.cover} type="button" aria-label="ヘルプを閉じる" onClick={onClose} />
       <div className={styles.dialog} role="dialog" aria-modal="true" aria-labelledby="help-title">
         <header className={styles.header}>
           <h2 className={styles.title} id="help-title">
-            ヘルプ
+            TileLoopについて
           </h2>
           <button className={styles.closeButton} type="button" aria-label="閉じる" onClick={onClose}>
-            ×
+            <X className={styles.closeIcon} aria-hidden="true" strokeWidth={2.5} />
           </button>
         </header>
 
@@ -36,23 +40,32 @@ export const HelpModal: React.FC<Props> = ({ onClose }) => {
           <section className={styles.section}>
             <h3 className={styles.sectionTitle}>画像</h3>
             <p className={styles.text}>
-              画像を追加すると、プレビューにタイル状に並びます。ドラッグ&ドロップでも追加できます。
+              「画像を追加」から使いたい画像を選ぶと、プレビューにタイル状に並びます。ドラッグ&ドロップでも追加できます。
             </p>
           </section>
 
           <section className={styles.section}>
-            <h3 className={styles.sectionTitle}>設定</h3>
+            <h3 className={styles.sectionTitle}>配置</h3>
             <ul className={styles.list}>
-              <li>用途で出力サイズを選べます。</li>
-              <li>配置で並べ方を切り替えられます。</li>
-              <li>詳細設定でサイズ、余白、角丸、色、シャドウを調整できます。</li>
+              <li>出力サイズはプリセットから選べます。必要な場合はカスタムで幅と高さを指定できます。</li>
+              <li>並べ方は「整列グリッド」と「ずらしグリッド」から選べます。</li>
+              <li>「並びをシャッフル」で画像の並び順を変えられます。</li>
             </ul>
           </section>
 
           <section className={styles.section}>
-            <h3 className={styles.sectionTitle}>書き出し</h3>
+            <h3 className={styles.sectionTitle}>調整</h3>
+            <ul className={styles.list}>
+              <li>タイルの画像サイズ、回転、余白、角丸を調整できます。</li>
+              <li>背景とカバーの色、不透明度を変更できます。</li>
+              <li>画像のシャドウは色、ぼかし、位置を調整できます。</li>
+            </ul>
+          </section>
+
+          <section className={styles.section}>
+            <h3 className={styles.sectionTitle}>保存</h3>
             <p className={styles.text}>
-              「画像を保存する」を押すと、現在のプレビュー設定で画像を作成します。作成後に表示される画面からダウンロードできます。
+              「画像を作成する」を押すと、現在の設定で画像を作成します。作成後はプレビューを確認して、ダウンロードできます。
             </p>
           </section>
 
@@ -79,6 +92,7 @@ export const HelpModal: React.FC<Props> = ({ onClose }) => {
           </section>
         </div>
       </div>
-    </React.Fragment>
+    </Fragment>,
+    document.body,
   );
 };
