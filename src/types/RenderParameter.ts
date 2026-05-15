@@ -11,10 +11,9 @@ export interface RenderParameter {
   rotation: number;
   margin: number;
   borderRadius: number;
+  tileOpacity: number;
   bgColor: string;
   bgOpacity: number;
-  frontColor: string;
-  frontOpacity: number;
   shadowColor: string;
   shadowOpacity: number;
   shadowBlur: number;

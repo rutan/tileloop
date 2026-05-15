@@ -16,10 +16,9 @@ export const SvgRenderer = forwardRef<SVGSVGElement, Props>(({ parameter }, ref)
     rotation,
     margin,
     borderRadius,
+    tileOpacity,
     bgColor,
     bgOpacity,
-    frontColor,
-    frontOpacity,
     shadowColor,
     shadowOpacity,
     shadowBlur,
@@ -74,12 +73,12 @@ export const SvgRenderer = forwardRef<SVGSVGElement, Props>(({ parameter }, ref)
               href={placement.picture.url}
               width={itemWidth}
               height={itemHeight}
+              opacity={tileOpacity}
               preserveAspectRatio="xMidYMid slice"
             />
           </g>
         ))}
       </g>
-      <rect fill={frontColor} opacity={frontOpacity} x={-width / 2} y={-height / 2} width={width} height={height} />
     </svg>
   );
 });

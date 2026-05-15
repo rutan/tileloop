@@ -56,8 +56,8 @@ export const HelpModal: FC<Props> = ({ onClose }) => {
           <section className={styles.section}>
             <h3 className={styles.sectionTitle}>調整</h3>
             <ul className={styles.list}>
-              <li>タイルの画像サイズ、回転、余白、角丸を調整できます。</li>
-              <li>背景とカバーの色、不透明度を変更できます。</li>
+              <li>タイルの画像サイズ、回転、余白、角丸、透明度を調整できます。</li>
+              <li>背景の色、不透明度を変更できます。</li>
               <li>画像のシャドウは色、ぼかし、位置を調整できます。</li>
             </ul>
           </section>

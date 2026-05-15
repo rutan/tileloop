@@ -3,6 +3,7 @@ import { parseDecimalInput, parseIntegerInput } from '../../functions/parseNumbe
 import { store, updateRenderParameterItem } from '../../store';
 import { ColorControl } from '../molecules/ColorControl';
 import { InputWithLabel } from '../molecules/InputWithLabel';
+import { OpacityControl } from '../molecules/OpacityControl';
 import { PanelSection } from '../molecules/PanelSection';
 import { TwinInputWithLabel } from '../molecules/TwinInputWithLabel';
 import styles from './ParameterPanel.module.css';
@@ -12,6 +13,20 @@ export const AdjustmentParameterForm = () => {
 
   return (
     <div className={styles.container}>
+      <PanelSection title="背景">
+        <ColorControl
+          title="背景色"
+          color={state.renderParameter.bgColor}
+          opacity={state.renderParameter.bgOpacity}
+          onChangeColor={(value) => {
+            dispatch(updateRenderParameterItem('bgColor', value));
+          }}
+          onChangeOpacity={(value) => {
+            dispatch(updateRenderParameterItem('bgOpacity', value));
+          }}
+        />
+      </PanelSection>
+
       <PanelSection title="タイル">
         <div className={styles.grid}>
           <TwinInputWithLabel
@@ -43,7 +58,7 @@ export const AdjustmentParameterForm = () => {
           />
 
           <InputWithLabel
-            label="余白"
+            label="タイル間の余白"
             type="number"
             value={state.renderParameter.margin}
             min={0}
@@ -63,37 +78,20 @@ export const AdjustmentParameterForm = () => {
               dispatch(updateRenderParameterItem('borderRadius', parseIntegerInput(value)));
             }}
           />
+
+          <OpacityControl
+            title="透明度"
+            opacity={state.renderParameter.tileOpacity}
+            onChangeOpacity={(value) => {
+              dispatch(updateRenderParameterItem('tileOpacity', value));
+            }}
+          />
         </div>
       </PanelSection>
 
-      <PanelSection title="背景色">
+      <PanelSection title="タイルの影">
         <ColorControl
-          title="背景"
-          color={state.renderParameter.bgColor}
-          opacity={state.renderParameter.bgOpacity}
-          onChangeColor={(value) => {
-            dispatch(updateRenderParameterItem('bgColor', value));
-          }}
-          onChangeOpacity={(value) => {
-            dispatch(updateRenderParameterItem('bgOpacity', value));
-          }}
-        />
-        <ColorControl
-          title="カバー"
-          color={state.renderParameter.frontColor}
-          opacity={state.renderParameter.frontOpacity}
-          onChangeColor={(value) => {
-            dispatch(updateRenderParameterItem('frontColor', value));
-          }}
-          onChangeOpacity={(value) => {
-            dispatch(updateRenderParameterItem('frontOpacity', value));
-          }}
-        />
-      </PanelSection>
-
-      <PanelSection title="画像のシャドウ">
-        <ColorControl
-          title="シャドウ"
+          title="シャドウの色"
           color={state.renderParameter.shadowColor}
           opacity={state.renderParameter.shadowOpacity}
           onChangeColor={(value) => {
