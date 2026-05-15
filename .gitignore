@@ -1,9 +1,8 @@
 /node_modules
-/.cache
 /dist
-/public
 /tmp
 /.vite
+/.wrangler
 *.log
 
 .vercel
