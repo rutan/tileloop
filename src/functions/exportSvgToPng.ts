@@ -1,10 +1,3 @@
-import { useContext, useRef, useState } from 'react';
-import { setResultFile, store } from '../store';
-import styles from './App.module.css';
-import { EditPanel } from './organisms/EditPanel';
-import { Header } from './organisms/Header';
-import { PicturePreview } from './organisms/PicturePreview';
-
 const svgNamespace = 'http://www.w3.org/2000/svg';
 const xlinkNamespace = 'http://www.w3.org/1999/xlink';
 
@@ -124,7 +117,7 @@ async function createExportSvg(svg: SVGSVGElement): Promise<SVGSVGElement> {
   return clonedSvg;
 }
 
-async function renderSvgToPngBlob(svg: SVGSVGElement, canvas: HTMLCanvasElement, width: number, height: number) {
+export async function exportSvgToPngBlob(svg: SVGSVGElement, canvas: HTMLCanvasElement, width: number, height: number) {
   const exportSvg = await createExportSvg(svg);
   const svgBlob = new Blob([new XMLSerializer().serializeToString(exportSvg)], {
     type: 'image/svg+xml;charset=utf-8',
@@ -146,43 +139,3 @@ async function renderSvgToPngBlob(svg: SVGSVGElement, canvas: HTMLCanvasElement,
     URL.revokeObjectURL(svgUrl);
   }
 }
-
-export const App = () => {
-  const svgRef = useRef<SVGSVGElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [isExporting, setIsExporting] = useState(false);
-  const { state, dispatch } = useContext(store);
-
-  const exportPng = async () => {
-    const svg = svgRef.current;
-    const canvas = canvasRef.current;
-    if (!svg || !canvas || isExporting) return;
-
-    const { width, height } = state.renderParameter;
-    setIsExporting(true);
-
-    try {
-      const blob = await renderSvgToPngBlob(svg, canvas, width, height);
-      dispatch(setResultFile(URL.createObjectURL(blob)));
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsExporting(false);
-    }
-  };
-
-  return (
-    <div className={styles.container}>
-      <div className={styles.headerArea}>
-        <Header />
-      </div>
-      <div className={styles.previewArea}>
-        <PicturePreview svgRef={svgRef} />
-      </div>
-      <div className={styles.editArea}>
-        <EditPanel isExporting={isExporting} onExport={exportPng} />
-      </div>
-      <canvas className={styles.canvas} ref={canvasRef} />
-    </div>
-  );
-};

@@ -11,8 +11,8 @@ import {
   useState,
 } from 'react';
 import { store } from '../../store';
-import { SvgRenderer } from '../atoms/SvgRenderer';
 import styles from './PicturePreview.module.css';
+import { SvgRenderer } from './SvgRenderer';
 
 const MIN_ZOOM = 0.1;
 const MAX_ZOOM = 4;

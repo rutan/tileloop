@@ -1,7 +1,7 @@
 import { X } from 'lucide-react';
 import { FC } from 'react';
-import { InputForm, Props as InputFormProps } from '../atoms/InputForm';
 import styles from './FormField.module.css';
+import { InputForm, Props as InputFormProps } from './InputForm';
 
 interface Props extends InputFormProps {
   className?: string;

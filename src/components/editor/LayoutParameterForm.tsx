@@ -2,11 +2,11 @@ import { useContext, useState } from 'react';
 import { parseIntegerInput } from '../../functions/parseNumberInput';
 import { store, updateRenderParameterItem } from '../../store';
 import { TileLayoutMode } from '../../types/RenderParameter';
-import { PanelButton } from '../molecules/PanelButton';
-import { PanelSection } from '../molecules/PanelSection';
-import { SelectWithLabel } from '../molecules/SelectWithLabel';
-import { TwinInputWithLabel } from '../molecules/TwinInputWithLabel';
+import { PanelButton } from '../controls/PanelButton';
+import { SelectWithLabel } from '../controls/SelectWithLabel';
+import { TwinInputWithLabel } from '../controls/TwinInputWithLabel';
 import styles from './ParameterPanel.module.css';
+import { PanelSection } from './parts/PanelSection';
 
 const outputPresets = [
   { label: '横長SNSカバー', width: 1500, height: 500 },

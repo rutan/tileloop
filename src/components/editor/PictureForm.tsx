@@ -1,8 +1,8 @@
 import { useContext, useRef } from 'react';
 import { addPictures, removeAllPictures, removePicture, store } from '../../store';
-import { ActionRow } from '../molecules/ActionRow';
-import { PanelButton } from '../molecules/PanelButton';
-import { PictureItem } from '../molecules/PictureItem';
+import { PanelButton } from '../controls/PanelButton';
+import { ActionRow } from './parts/ActionRow';
+import { PictureItem } from './parts/PictureItem';
 import styles from './PictureForm.module.css';
 
 export const PictureForm = () => {

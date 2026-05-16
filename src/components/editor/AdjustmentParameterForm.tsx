@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 import { parseDecimalInput, parseIntegerInput } from '../../functions/parseNumberInput';
 import { store, updateRenderParameterItem } from '../../store';
-import { ColorControl } from '../molecules/ColorControl';
-import { InputWithLabel } from '../molecules/InputWithLabel';
-import { OpacityControl } from '../molecules/OpacityControl';
-import { PanelSection } from '../molecules/PanelSection';
-import { TwinInputWithLabel } from '../molecules/TwinInputWithLabel';
+import { ColorControl } from '../controls/ColorControl';
+import { InputWithLabel } from '../controls/InputWithLabel';
+import { OpacityControl } from '../controls/OpacityControl';
+import { TwinInputWithLabel } from '../controls/TwinInputWithLabel';
 import styles from './ParameterPanel.module.css';
+import { PanelSection } from './parts/PanelSection';
 
 export const AdjustmentParameterForm = () => {
   const { state, dispatch } = useContext(store);

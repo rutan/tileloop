@@ -1,6 +1,6 @@
 import { X } from 'lucide-react';
 import { FC } from 'react';
-import { Picture } from '../../types/Picture';
+import { Picture } from '../../../types/Picture';
 import styles from './PictureItem.module.css';
 
 interface Props {

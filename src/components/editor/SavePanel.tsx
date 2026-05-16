@@ -1,9 +1,9 @@
 import { PencilRuler } from 'lucide-react';
 import { FC, useContext } from 'react';
 import { setResultFile, store } from '../../store';
-import { ActionRow } from '../molecules/ActionRow';
-import { PanelButton, PanelLinkButton } from '../molecules/PanelButton';
-import { PanelSection } from '../molecules/PanelSection';
+import { PanelButton, PanelLinkButton } from '../controls/PanelButton';
+import { ActionRow } from './parts/ActionRow';
+import { PanelSection } from './parts/PanelSection';
 import styles from './SavePanel.module.css';
 
 interface Props {
