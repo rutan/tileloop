@@ -16,7 +16,7 @@
   min-width: 0;
   font-size: 13px;
   line-height: 1.4;
-  color: var(--color-text-default-soft);
+  color: var(--color-control-label);
   font-weight: 700;
 }
 
@@ -33,7 +33,7 @@
   display: block;
   min-width: 0;
   width: 100%;
-  accent-color: var(--color-accent);
+  accent-color: var(--color-interactive);
 }
 
 .opacitySlider:focus-visible {

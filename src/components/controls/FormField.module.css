@@ -20,13 +20,13 @@
   padding: 0 10px;
   border: 1px solid var(--border-control);
   border-radius: var(--radius-control);
-  background: var(--color-surface);
-  color: var(--color-text-strong);
+  background: var(--color-surface-base);
+  color: var(--color-text-primary);
   font-size: 14px;
 }
 
 .control:focus {
-  border-color: var(--color-accent);
+  border-color: var(--color-interactive);
   outline: 2px solid var(--focus-ring);
   outline-offset: 0;
 }
@@ -48,7 +48,7 @@
   align-items: center;
   justify-content: center;
   min-width: 0;
-  color: var(--color-text-faint);
+  color: var(--color-control-separator);
 }
 
 .separatorIcon {

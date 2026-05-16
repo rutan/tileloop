@@ -61,7 +61,7 @@
   max-width: calc(100% - 20px);
   padding: 6px;
   border: 1px solid var(--border-overlay);
-  background: var(--color-surface-glass);
+  background: var(--color-surface-floating);
   backdrop-filter: var(--blur-floating);
   border-radius: var(--radius-pill);
   box-shadow: var(--shadow-floating);
@@ -75,8 +75,8 @@
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-pill);
-  background: var(--color-surface);
-  color: var(--color-text-default);
+  background: var(--color-surface-base);
+  color: var(--color-text-secondary);
 }
 
 .zoomIcon {
@@ -96,8 +96,8 @@
   height: 32px;
   padding: 0 8px;
   border-radius: var(--radius-pill);
-  background: var(--color-surface);
-  color: var(--color-text-default);
+  background: var(--color-surface-base);
+  color: var(--color-text-secondary);
   font-size: 13px;
   line-height: 1;
   font-weight: 700;
@@ -108,12 +108,12 @@
   width: 120px;
   min-width: 80px;
   display: none;
-  accent-color: var(--color-accent);
+  accent-color: var(--color-interactive);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .zoomButton:hover:not(:disabled),
   .zoomResetButton:hover {
-    color: var(--color-accent);
+    color: var(--color-interactive);
   }
 }

@@ -1,7 +1,7 @@
 import { AnchorHTMLAttributes, ButtonHTMLAttributes, FC } from 'react';
 import styles from './PanelButton.module.css';
 
-type Variant = 'accent' | 'danger' | 'secondary' | 'success';
+type Variant = 'accent' | 'danger' | 'primary' | 'secondary';
 
 interface CommonProps {
   className?: string;

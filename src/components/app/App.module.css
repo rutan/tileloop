@@ -4,7 +4,7 @@
   display: grid;
   grid-template-areas: 'main';
   overflow: hidden;
-  background: var(--color-canvas);
+  background: var(--color-background-app);
 }
 
 .headerArea {
@@ -19,7 +19,7 @@
   min-width: 0;
   min-height: 0;
   overflow: hidden;
-  background: var(--color-canvas);
+  background: var(--color-background-app);
 }
 
 .editArea {

@@ -80,7 +80,7 @@ export const SavePanel: FC<Props> = ({ isExporting, onExport }) => {
       </div>
 
       <PanelButton
-        variant="success"
+        variant="primary"
         type="button"
         onClick={() => {
           void onExport();

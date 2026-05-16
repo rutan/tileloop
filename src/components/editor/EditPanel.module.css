@@ -9,7 +9,7 @@
 
   margin: 0 12px max(12px, env(safe-area-inset-bottom));
   padding: 12px;
-  background: var(--color-surface-glass);
+  background: var(--color-surface-floating);
   backdrop-filter: var(--blur-floating);
   border-radius: var(--radius-sheet);
   box-shadow: var(--shadow-sheet);
@@ -34,7 +34,7 @@
   align-items: center;
   justify-content: center;
   background: transparent;
-  color: var(--color-text-handle);
+  color: var(--color-drag-handle);
   cursor: grab;
   touch-action: none;
   user-select: none;
@@ -136,13 +136,13 @@
 }
 
 .activeNavButton {
-  background: var(--color-accent-soft);
-  color: var(--color-accent-strong);
+  background: var(--color-selected-background);
+  color: var(--color-selected-text);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .sheetToggle:hover {
-    color: var(--color-text-handle-hover);
+    color: var(--color-drag-handle-hover);
   }
 }
 

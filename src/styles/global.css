@@ -1,38 +1,33 @@
-html,
-body,
-#root {
-  width: 100%;
-  height: 100%;
-}
-
 :root {
-  --color-canvas: #e1e1e1;
-  --color-surface: #fff;
-  --color-surface-muted: #f7f7f7;
-  --color-surface-subtle: #f1f1f1;
-  --color-surface-glass: rgb(255 255 255 / 75%);
-  --color-surface-dialog: rgb(255 255 255 / 78%);
-  --color-surface-card: rgb(255 255 255 / 66%);
-  --color-surface-preview: rgb(255 255 255 / 50%);
-  --color-overlay: rgb(0 0 0 / 28%);
+  --color-background-app: #e1e1e1;
+  --color-background-scrim: rgb(0 0 0 / 28%);
 
-  --color-text-strong: #222;
-  --color-text-default: #333;
-  --color-text-default-soft: #444;
+  --color-surface-base: #fff;
+  --color-surface-floating: rgb(255 255 255 / 75%);
+  --color-surface-modal: rgb(255 255 255 / 78%);
+  --color-surface-card: rgb(255 255 255 / 66%);
+  --color-thumbnail-background: #f7f7f7;
+  --color-thumbnail-placeholder: #f1f1f1;
+  --color-preview-frame-background: rgb(255 255 255 / 50%);
+
+  --color-text-primary: #222;
+  --color-text-secondary: #333;
   --color-text-muted: #555;
   --color-text-subtle: #666;
-  --color-text-faint: #777;
   --color-text-disabled: #aaa;
-  --color-text-handle: #b7b7b7;
-  --color-text-handle-hover: #8f8f8f;
   --color-text-inverse: #fff;
+  --color-control-label: #444;
+  --color-control-separator: #777;
+  --color-drag-handle: #b7b7b7;
+  --color-drag-handle-hover: #8f8f8f;
 
-  --color-accent: #0288d1;
-  --color-accent-strong: #0277bd;
-  --color-accent-soft: #e7f4fb;
-  --color-success: #43a047;
+  --color-interactive: #0288d1;
+  --color-link: #0277bd;
+  --color-selected-background: #e7f4fb;
+  --color-selected-text: #0277bd;
+  --color-action-primary: var(--color-interactive);
   --color-danger: #c62828;
-  --color-danger-fill: #f33;
+  --color-danger-background-hover: #f33;
 
   --border-control: #cfcfcf;
   --border-default: #d7d7d7;
@@ -48,15 +43,14 @@ body,
   --shadow-floating: 0 2px 8px rgb(0 0 0 / 12%);
   --shadow-sheet: 0 -8px 30px rgb(0 0 0 / 14%);
   --shadow-dialog: 0 18px 48px rgb(0 0 0 / 18%);
-  --shadow-tight: 0 0 5px rgb(0 0 0 / 12%);
-  --shadow-tight-strong: 0 0 5px rgb(0 0 0 / 20%);
+  --shadow-preview-image: 0 0 5px rgb(0 0 0 / 12%);
+  --shadow-floating-control: 0 0 5px rgb(0 0 0 / 20%);
 
   --radius-control: 6px;
   --radius-card: 8px;
-  --radius-button: 17px;
   --radius-sheet: 40px;
   --radius-dialog: 32px;
-  --radius-pill: 50vh;
+  --radius-pill: 999px;
   --radius-circle: 50%;
 
   --blur-floating: blur(10px);
@@ -64,7 +58,16 @@ body,
   --blur-overlay: blur(2px);
 }
 
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+}
+
 body {
   font-size: 16px;
   font-family: sans-serif;
+  background: var(--color-background-app);
+  color: var(--color-text-primary);
 }

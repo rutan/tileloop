@@ -75,7 +75,7 @@ export const PictureForm = () => {
           すべて削除
         </PanelButton>
         <PanelButton
-          variant="success"
+          variant="primary"
           type="button"
           onClick={() => {
             const fileEl = fileRef.current;

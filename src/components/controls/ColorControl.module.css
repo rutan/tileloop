@@ -27,7 +27,7 @@
   min-width: 0;
   font-size: 13px;
   line-height: 1.4;
-  color: var(--color-text-default-soft);
+  color: var(--color-control-label);
   font-weight: 700;
 }
 
@@ -60,14 +60,14 @@
   padding: 3px;
   border: 1px solid var(--border-control);
   border-radius: var(--radius-control);
-  background: var(--color-surface);
+  background: var(--color-surface-base);
   cursor: pointer;
 }
 
 .colorPicker:focus,
 .hexInput:focus,
 .opacitySlider:focus-visible {
-  border-color: var(--color-accent);
+  border-color: var(--color-interactive);
   outline: 2px solid var(--focus-ring);
   outline-offset: 0;
 }
@@ -80,8 +80,8 @@
   padding: 0 10px;
   border: 1px solid var(--border-control);
   border-radius: var(--radius-control);
-  background: var(--color-surface);
-  color: var(--color-text-strong);
+  background: var(--color-surface-base);
+  color: var(--color-text-primary);
   font-size: 13px;
   font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace;
   text-transform: uppercase;
@@ -91,6 +91,6 @@
   display: block;
   min-width: 0;
   width: 100%;
-  accent-color: var(--color-accent);
+  accent-color: var(--color-interactive);
   grid-column: 1 / -1;
 }
