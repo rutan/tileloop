@@ -26,8 +26,8 @@
   max-height: none;
   overflow-y: auto;
   padding: 8px;
-  border: 2px dotted #ccc;
-  border-radius: 8px;
+  border: 2px dotted var(--border-dotted);
+  border-radius: var(--radius-card);
 }
 
 .pictureItem {

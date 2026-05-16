@@ -9,10 +9,10 @@
 
   margin: 0 12px max(12px, env(safe-area-inset-bottom));
   padding: 12px;
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(10px);
-  border-radius: 40px;
-  box-shadow: 0 -8px 30px rgb(0 0 0 / 14%);
+  background: var(--color-surface-glass);
+  backdrop-filter: var(--blur-floating);
+  border-radius: var(--radius-sheet);
+  box-shadow: var(--shadow-sheet);
   transition: height 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
   will-change: height;
 }
@@ -34,7 +34,7 @@
   align-items: center;
   justify-content: center;
   background: transparent;
-  color: #b7b7b7;
+  color: var(--color-text-handle);
   cursor: grab;
   touch-action: none;
   user-select: none;
@@ -48,55 +48,6 @@
 
 .dragging .sheetToggle {
   cursor: grabbing;
-}
-
-.header {
-  flex: 0 0 auto;
-  min-height: 54px;
-  padding: 10px 12px;
-  border-bottom: 1px solid #e5e5e5;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 12px;
-}
-
-.header > div:first-child {
-  min-width: 0;
-}
-
-.title {
-  font-size: 18px;
-  line-height: 1.2;
-  font-weight: 700;
-}
-
-.subtitle {
-  display: none;
-  margin-top: 4px;
-  color: #666;
-  font-size: 12px;
-  line-height: 1.4;
-}
-
-.actions {
-  flex: 0 0 auto;
-  order: -1;
-  display: flex;
-  align-items: center;
-}
-
-.helpButton {
-  flex: 0 0 auto;
-  width: 36px;
-  height: 36px;
-  border: 1px solid #cfcfcf;
-  border-radius: 50%;
-  background: #fff;
-  color: #333;
-  font-size: 18px;
-  line-height: 1;
-  font-weight: 700;
 }
 
 .body {
@@ -156,7 +107,7 @@
 }
 
 .open .nav {
-  border-top-color: rgb(0 0 0 / 8%);
+  border-top-color: var(--border-divider);
 }
 
 .navButton {
@@ -167,9 +118,9 @@
   align-items: center;
   justify-content: center;
   gap: 3px;
-  border-radius: 50vh;
+  border-radius: var(--radius-pill);
   background: transparent;
-  color: #555;
+  color: var(--color-text-muted);
   font-weight: 700;
 }
 
@@ -185,18 +136,13 @@
 }
 
 .activeNavButton {
-  background: #e7f4fb;
-  color: #0277bd;
+  background: var(--color-accent-soft);
+  color: var(--color-accent-strong);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .sheetToggle:hover {
-    color: #8f8f8f;
-  }
-
-  .helpButton:hover {
-    border-color: #0288d1;
-    color: #0288d1;
+    color: var(--color-text-handle-hover);
   }
 }
 

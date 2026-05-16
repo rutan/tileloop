@@ -5,6 +5,65 @@ body,
   height: 100%;
 }
 
+:root {
+  --color-canvas: #e1e1e1;
+  --color-surface: #fff;
+  --color-surface-muted: #f7f7f7;
+  --color-surface-subtle: #f1f1f1;
+  --color-surface-glass: rgb(255 255 255 / 75%);
+  --color-surface-dialog: rgb(255 255 255 / 78%);
+  --color-surface-card: rgb(255 255 255 / 66%);
+  --color-surface-preview: rgb(255 255 255 / 50%);
+  --color-overlay: rgb(0 0 0 / 28%);
+
+  --color-text-strong: #222;
+  --color-text-default: #333;
+  --color-text-default-soft: #444;
+  --color-text-muted: #555;
+  --color-text-subtle: #666;
+  --color-text-faint: #777;
+  --color-text-disabled: #aaa;
+  --color-text-handle: #b7b7b7;
+  --color-text-handle-hover: #8f8f8f;
+  --color-text-inverse: #fff;
+
+  --color-accent: #0288d1;
+  --color-accent-strong: #0277bd;
+  --color-accent-soft: #e7f4fb;
+  --color-success: #43a047;
+  --color-danger: #c62828;
+  --color-danger-fill: #f33;
+
+  --border-control: #cfcfcf;
+  --border-default: #d7d7d7;
+  --border-muted: #e5e5e5;
+  --border-subtle: #eee;
+  --border-dotted: #ccc;
+  --border-spinner: #d8d8d8;
+  --border-overlay: rgb(0 0 0 / 12%);
+  --border-divider: rgb(0 0 0 / 8%);
+  --border-dialog: rgb(255 255 255 / 58%);
+  --focus-ring: rgb(2 136 209 / 18%);
+
+  --shadow-floating: 0 2px 8px rgb(0 0 0 / 12%);
+  --shadow-sheet: 0 -8px 30px rgb(0 0 0 / 14%);
+  --shadow-dialog: 0 18px 48px rgb(0 0 0 / 18%);
+  --shadow-tight: 0 0 5px rgb(0 0 0 / 12%);
+  --shadow-tight-strong: 0 0 5px rgb(0 0 0 / 20%);
+
+  --radius-control: 6px;
+  --radius-card: 8px;
+  --radius-button: 17px;
+  --radius-sheet: 40px;
+  --radius-dialog: 32px;
+  --radius-pill: 50vh;
+  --radius-circle: 50%;
+
+  --blur-floating: blur(10px);
+  --blur-dialog: blur(14px);
+  --blur-overlay: blur(2px);
+}
+
 body {
   font-size: 16px;
   font-family: sans-serif;
