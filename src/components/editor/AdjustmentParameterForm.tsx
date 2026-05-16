@@ -61,7 +61,7 @@ export const AdjustmentParameterForm = () => {
             label="タイル間の余白"
             type="number"
             value={state.renderParameter.margin}
-            min={0}
+            min={-1000}
             max={1000}
             onChangeValue={(value) => {
               dispatch(updateRenderParameterItem('margin', parseIntegerInput(value)));
