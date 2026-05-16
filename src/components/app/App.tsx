@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from 'react';
+import { CSSProperties, useContext, useRef, useState } from 'react';
 import { exportSvgToPngBlob } from '../../functions/exportSvgToPng';
 import { setResultFile, store } from '../../store';
 import { EditPanel } from '../editor/EditPanel';
@@ -10,7 +10,10 @@ export const App = () => {
   const svgRef = useRef<SVGSVGElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isExporting, setIsExporting] = useState(false);
+  const [editPanelHeight, setEditPanelHeight] = useState<number | null>(null);
   const { state, dispatch } = useContext(store);
+  const containerStyle =
+    editPanelHeight === null ? undefined : ({ '--edit-panel-height': `${editPanelHeight}px` } as CSSProperties);
 
   const exportPng = async () => {
     const svg = svgRef.current;
@@ -31,7 +34,7 @@ export const App = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={containerStyle}>
       <div className={styles.headerArea}>
         <Header />
       </div>
@@ -39,7 +42,7 @@ export const App = () => {
         <PicturePreview svgRef={svgRef} />
       </div>
       <div className={styles.editArea}>
-        <EditPanel isExporting={isExporting} onExport={exportPng} />
+        <EditPanel isExporting={isExporting} onExport={exportPng} onSheetHeightChange={setEditPanelHeight} />
       </div>
       <canvas className={styles.canvas} ref={canvasRef} />
     </div>

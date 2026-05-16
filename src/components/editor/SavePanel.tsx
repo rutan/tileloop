@@ -19,10 +19,10 @@ export const SavePanel: FC<Props> = ({ isExporting, onExport }) => {
   if (isExporting) {
     return (
       <div className={styles.container}>
-        <div className={styles.loadingPanel} role="status" aria-live="polite">
+        <output className={styles.loadingPanel} aria-live="polite">
           <span className={styles.spinner} aria-hidden="true" />
           <span>作成中</span>
-        </div>
+        </output>
       </div>
     );
   }

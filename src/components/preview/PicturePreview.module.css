@@ -29,7 +29,7 @@
   min-width: 100%;
   min-height: 100%;
   padding-block-start: max(82px, 50dvh);
-  padding-block-end: calc(min(54dvh, 430px) + max(96px, 50dvh));
+  padding-block-end: calc(var(--edit-panel-height, min(54dvh, 430px)) + max(96px, 50dvh));
   padding-inline: max(48px, 50dvw);
   box-sizing: content-box;
   display: flex;

@@ -11,6 +11,7 @@ type PanelKey = 'pictures' | 'layout' | 'adjust' | 'export';
 interface Props {
   isExporting: boolean;
   onExport: () => Promise<void>;
+  onSheetHeightChange?: (height: number) => void;
 }
 
 const navItems: { key: PanelKey; label: string; Icon: LucideIcon }[] = [
@@ -54,7 +55,7 @@ function getOpenSheetHeight() {
   return Math.max(collapsedSheetHeight, Math.min(fittedHeight, viewportHeight - 20));
 }
 
-export const EditPanel: FC<Props> = ({ isExporting, onExport }) => {
+export const EditPanel: FC<Props> = ({ isExporting, onExport, onSheetHeightChange }) => {
   const [activePanel, setActivePanel] = useState<PanelKey>('pictures');
   const [sheetPosition, setSheetPosition] = useState<SheetPosition>('open');
   const [openSheetHeight, setOpenSheetHeight] = useState(() =>
@@ -85,6 +86,10 @@ export const EditPanel: FC<Props> = ({ isExporting, onExport }) => {
       window.visualViewport?.removeEventListener('resize', updateOpenSheetHeight);
     };
   }, []);
+
+  useEffect(() => {
+    onSheetHeightChange?.(sheetHeight);
+  }, [onSheetHeightChange, sheetHeight]);
 
   const finishDrag = (shouldSnap: boolean) => {
     const drag = dragRef.current;

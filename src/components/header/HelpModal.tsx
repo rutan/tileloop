@@ -26,7 +26,7 @@ export const HelpModal: FC<Props> = ({ onClose }) => {
   return createPortal(
     <Fragment>
       <button className={styles.cover} type="button" aria-label="ヘルプを閉じる" onClick={onClose} />
-      <div className={styles.dialog} role="dialog" aria-modal="true" aria-labelledby="help-title">
+      <dialog className={styles.dialog} open aria-labelledby="help-title">
         <header className={styles.header}>
           <h2 className={styles.title} id="help-title">
             TileLoopについて
@@ -91,7 +91,7 @@ export const HelpModal: FC<Props> = ({ onClose }) => {
             </p>
           </section>
         </div>
-      </div>
+      </dialog>
     </Fragment>,
     document.body,
   );
