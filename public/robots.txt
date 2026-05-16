@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tileloop.rutan.dev/sitemap.xml

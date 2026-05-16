@@ -1,17 +1,72 @@
 <!doctype html>
-<html>
+<html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <title>TileLoop - 画像いっぱい入れたらタイルっぽく並んだ画像が出てくるやつ</title>
+    <title>TileLoop - タイル状の画像を作成できる無料Webツール</title>
+    <meta
+      name="description"
+      content="TileLoopは、複数の画像をアップロードするだけでタイル状に並べた画像を作成できる無料Webツールです。配置、余白、角丸、背景、シャドウを調整してPNGで保存できます。"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <meta property="og:title" content="TileLoop - 画像いっぱい入れたらタイルっぽく並んだ画像が出てくるやつ" />
+    <meta name="application-name" content="TileLoop" />
+    <meta name="author" content="rutan" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#f9f7f2" />
+    <link rel="canonical" href="https://tileloop.rutan.dev/" />
+    <meta property="og:title" content="TileLoop - タイル状の画像を作成できる無料Webツール" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://tileloop.rutan.dev" />
+    <meta property="og:url" content="https://tileloop.rutan.dev/" />
     <meta property="og:image" content="https://tileloop.rutan.dev/ogp.jpg" />
-    <meta property="og:description" content="画像をいっぱい入れたらタイルっぽく並んだ画像が出てくるツールだよ" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="TileLoopで作成したタイル状の画像のプレビュー" />
+    <meta
+      property="og:description"
+      content="複数の画像をアップロードするだけで、タイル状に並べた画像を作成できる無料Webツールです。"
+    />
+    <meta property="og:site_name" content="TileLoop" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@ru_shalm" />
+    <meta name="twitter:title" content="TileLoop - タイル状の画像を作成できる無料Webツール" />
+    <meta
+      name="twitter:description"
+      content="複数の画像をアップロードするだけで、タイル状に並べた画像を作成できる無料Webツールです。"
+    />
+    <meta name="twitter:image" content="https://tileloop.rutan.dev/ogp.jpg" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "TileLoop",
+        "url": "https://tileloop.rutan.dev/",
+        "description": "複数の画像をアップロードするだけでタイル状に並べた画像を作成できる無料Webツールです。配置、余白、角丸、背景、シャドウを調整してPNGで保存できます。",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Web",
+        "inLanguage": "ja",
+        "image": "https://tileloop.rutan.dev/ogp.jpg",
+        "creator": {
+          "@type": "Person",
+          "name": "rutan",
+          "sameAs": "https://x.com/ru_shalm"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "JPY"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <main>
+        <h1>TileLoop</h1>
+        <p>TileLoopは、複数の画像をアップロードするだけでタイル状に並べた画像を作成できる無料Webツールです。</p>
+        <p>このアプリを使用するにはJavaScriptを有効にしてください。</p>
+      </main>
+    </noscript>
     <script type="module" src="/src/index.tsx"></script>
   </body>
 </html>
