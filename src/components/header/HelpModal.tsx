@@ -40,7 +40,7 @@ export const HelpModal: FC<Props> = ({ onClose }) => {
           <section className={styles.section}>
             <h3 className={styles.sectionTitle}>画像</h3>
             <p className={styles.text}>
-              「画像を追加」から使いたい画像を選ぶと、プレビューにタイル状に並びます。ドラッグ&ドロップでも追加できます。
+              「画像を追加」から使いたい画像を選ぶと、プレビューにタイル状に並びます。ドラッグ&ドロップや貼り付けでも追加できます。
             </p>
           </section>
 

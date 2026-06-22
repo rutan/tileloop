@@ -175,7 +175,7 @@ export const EditPanel: FC<Props> = ({ isExporting, onExport, onSheetHeightChang
     '--sheet-progress': `${sheetProgress}`,
   } as CSSProperties;
   const panelContent: Record<PanelKey, ReactNode> = {
-    pictures: <PictureForm />,
+    pictures: <PictureForm isPasteEnabled={activePanel === 'pictures'} />,
     layout: <LayoutParameterForm />,
     adjust: <AdjustmentParameterForm />,
     export: <SavePanel isExporting={isExporting} onExport={onExport} />,
