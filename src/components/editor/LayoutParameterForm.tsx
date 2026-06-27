@@ -9,10 +9,10 @@ import styles from './ParameterPanel.module.css';
 import { PanelSection } from './parts/PanelSection';
 
 const outputPresets = [
-  { label: '横長SNSカバー', width: 1500, height: 500 },
-  { label: 'スマホ壁紙', width: 1080, height: 1920 },
-  { label: 'PC壁紙', width: 1920, height: 1080 },
-  { label: 'OGP', width: 1200, height: 630 },
+  { label: '横長SNSカバー (1500x500)', width: 1500, height: 500 },
+  { label: 'スマホ壁紙 (1080x1920)', width: 1080, height: 1920 },
+  { label: 'PC壁紙 (1920x1080)', width: 1920, height: 1080 },
+  { label: 'OGP (1200x630)', width: 1200, height: 630 },
 ];
 
 export const LayoutParameterForm = () => {

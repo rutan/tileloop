@@ -31,6 +31,31 @@
   outline-offset: 0;
 }
 
+.selectWrapper {
+  position: relative;
+  display: block;
+}
+
+.select {
+  appearance: none;
+  padding-right: 34px;
+}
+
+.selectIcon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  width: 16px;
+  height: 16px;
+  color: var(--color-text-muted);
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.select:disabled + .selectIcon {
+  color: var(--color-text-disabled);
+}
+
 .control[type='color'] {
   padding: 3px;
 }

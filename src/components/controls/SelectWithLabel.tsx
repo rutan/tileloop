@@ -1,3 +1,4 @@
+import { ChevronDown } from 'lucide-react';
 import { FC, SelectHTMLAttributes } from 'react';
 import styles from './FormField.module.css';
 
@@ -10,9 +11,12 @@ export const SelectWithLabel: FC<Props> = ({ className, label, children, ...prop
   return (
     <label className={[styles.container, className].filter(Boolean).join(' ')}>
       <span className={styles.label}>{label}</span>
-      <select className={styles.control} {...props}>
-        {children}
-      </select>
+      <span className={styles.selectWrapper}>
+        <select className={[styles.control, styles.select].join(' ')} {...props}>
+          {children}
+        </select>
+        <ChevronDown className={styles.selectIcon} aria-hidden="true" />
+      </span>
     </label>
   );
 };
