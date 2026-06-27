@@ -2,6 +2,7 @@ import { createRoot } from 'react-dom/client';
 import 'ress/ress.css';
 import { App } from './components/app/App';
 import { Provider } from './store';
+import { ThemeProvider } from './theme';
 import './styles/global.css';
 
 (() => {
@@ -11,8 +12,10 @@ import './styles/global.css';
   }
 
   createRoot(rootElement).render(
-    <Provider>
-      <App />
-    </Provider>,
+    <ThemeProvider>
+      <Provider>
+        <App />
+      </Provider>
+    </ThemeProvider>,
   );
 })();

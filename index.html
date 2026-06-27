@@ -34,6 +34,16 @@
       content="複数の画像をアップロードするだけで、タイル状に並べた画像を作成できる無料Webツールです。"
     />
     <meta name="twitter:image" content="https://tileloop.rutan.dev/ogp.jpg" />
+    <script>
+      (() => {
+        try {
+          const theme = localStorage.getItem('tileloop:theme');
+          if (theme === 'light' || theme === 'dark') {
+            document.documentElement.dataset.theme = theme;
+          }
+        } catch {}
+      })();
+    </script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",

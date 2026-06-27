@@ -20,7 +20,7 @@
   font-weight: 700;
 }
 
-.helpButton {
+.iconButton {
   flex: 0 0 auto;
   width: 36px;
   height: 36px;
@@ -32,14 +32,14 @@
   color: var(--color-text-secondary);
 }
 
-.helpIcon {
+.icon {
   width: 20px;
   height: 20px;
   display: block;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .helpButton:hover {
+  .iconButton:hover {
     color: var(--color-interactive);
   }
 }
