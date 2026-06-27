@@ -9,7 +9,7 @@ import './styles/global.css';
     throw new Error('Root element was not found.');
   }
 
-  if (rootElement.hasChildNodes()) {
+  if (rootElement.childElementCount > 0) {
     hydrateRoot(rootElement, <AppRoot />);
     return;
   }
