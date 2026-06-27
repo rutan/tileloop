@@ -38,7 +38,13 @@ export const IntroScreen: FC<Props> = ({ onStart }) => {
         <div className={styles.copy}>
           <p className={styles.kicker}>TileLoop</p>
           <h1 className={styles.title} id="intro-title">
-            画像をまとめて、タイル状の1枚画像に。
+            画像を
+            <wbr />
+            まとめて、
+            <wbr />
+            タイル状の
+            <wbr />
+            1枚の画像に。
           </h1>
           <p className={styles.lead}>
             並べたい画像を選ぶだけ！ かわいくてシンプルなUIで、簡単にタイル状の画像を作成できるWebツール。

@@ -33,10 +33,13 @@
 .title {
   margin: 0;
   max-width: 10em;
-  font-size: clamp(36px, 6vw, 64px);
-  line-height: 1.08;
-  letter-spacing: 0;
+  font-size: clamp(36px, 6vw, 60px);
+  line-height: 1.24;
+  letter-spacing: -0.02em;
   font-weight: 800;
+
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 .lead {
@@ -173,7 +176,7 @@
   }
 
   .title {
-    max-width: 11em;
+    max-width: none;
   }
 
   .previewPanel {
