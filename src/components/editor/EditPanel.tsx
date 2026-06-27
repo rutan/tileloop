@@ -14,11 +14,11 @@ interface Props {
   onSheetHeightChange?: (height: number) => void;
 }
 
-const navItems: { key: PanelKey; label: string; Icon: LucideIcon }[] = [
-  { key: 'pictures', label: '画像', Icon: ImagePlus },
-  { key: 'layout', label: '配置', Icon: LayoutGrid },
-  { key: 'adjust', label: '調整', Icon: SlidersHorizontal },
-  { key: 'export', label: '保存', Icon: Download },
+const navItems: { key: PanelKey; title: string; buttonLabel: string; Icon: LucideIcon }[] = [
+  { key: 'pictures', title: '並べる画像を選択', buttonLabel: '画像', Icon: ImagePlus },
+  { key: 'layout', title: '画像の配置を設定', buttonLabel: '配置', Icon: LayoutGrid },
+  { key: 'adjust', title: 'プロ向けの細かい調整', buttonLabel: '調整', Icon: SlidersHorizontal },
+  { key: 'export', title: 'つくった画像を保存', buttonLabel: '保存', Icon: Download },
 ];
 
 type SheetPosition = 'collapsed' | 'open';
@@ -220,7 +220,7 @@ export const EditPanel: FC<Props> = ({ isExporting, onExport, onSheetHeightChang
             className={[styles.panel, activePanel === item.key ? styles.activePanel : ''].filter(Boolean).join(' ')}
             key={item.key}
           >
-            <h2 className={styles.sectionTitle}>{item.label}</h2>
+            <h2 className={styles.sectionTitle}>{item.title}</h2>
             {panelContent[item.key]}
           </section>
         ))}
@@ -252,7 +252,7 @@ export const EditPanel: FC<Props> = ({ isExporting, onExport, onSheetHeightChang
               }}
             >
               <Icon className={styles.navIcon} aria-hidden="true" strokeWidth={2.4} />
-              <span className={styles.navLabel}>{item.label}</span>
+              <span className={styles.navLabel}>{item.buttonLabel}</span>
             </button>
           );
         })}
