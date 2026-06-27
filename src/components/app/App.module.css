@@ -7,6 +7,22 @@
   background: var(--color-background-app);
 }
 
+.introScreenContainer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100dvh;
+  overflow: auto;
+  z-index: var(--z-index-intro-screen);
+  transition: opacity 0.2s ease-in-out;
+}
+
+.introScreenContainer[data-is-visible='false'] {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .headerArea {
   position: absolute;
   left: max(10px, env(safe-area-inset-left));

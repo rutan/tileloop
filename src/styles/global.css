@@ -56,6 +56,8 @@
   --blur-floating: blur(10px);
   --blur-dialog: blur(14px);
   --blur-overlay: blur(2px);
+
+  --z-index-intro-screen: 65535;
 }
 
 html,
