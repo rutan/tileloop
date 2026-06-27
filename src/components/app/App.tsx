@@ -1,4 +1,4 @@
-import { CSSProperties, useContext, useRef, useState } from 'react';
+import { CSSProperties, useContext, useEffect, useRef, useState } from 'react';
 import { exportSvgToPngBlob } from '../../functions/exportSvgToPng';
 import { setResultFile, store } from '../../store';
 import { EditPanel } from '../editor/EditPanel';
@@ -9,8 +9,14 @@ import { IntroScreen } from './IntroScreen';
 
 const introSeenStorageKey = 'tileloop:intro-seen';
 
+function clearIntroSeenDataset() {
+  if (typeof document === 'undefined') return;
+
+  delete document.documentElement.dataset.introSeen;
+}
+
 function hasSeenIntro() {
-  if (typeof window === 'undefined') return true;
+  if (typeof window === 'undefined') return false;
 
   try {
     return window.sessionStorage.getItem(introSeenStorageKey) === 'true';
@@ -32,12 +38,30 @@ function saveIntroSeen() {
 export const App = () => {
   const svgRef = useRef<SVGSVGElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [isStarted, setIsStarted] = useState(hasSeenIntro);
+  const [isStarted, setIsStarted] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
   const [editPanelHeight, setEditPanelHeight] = useState<number | null>(null);
   const { state, dispatch } = useContext(store);
   const containerStyle =
     editPanelHeight === null ? undefined : ({ '--edit-panel-height': `${editPanelHeight}px` } as CSSProperties);
+
+  useEffect(() => {
+    const introSeen = hasSeenIntro();
+
+    setIsStarted(introSeen);
+  }, []);
+
+  useEffect(() => {
+    if (!isStarted) return;
+
+    const frameId = requestAnimationFrame(() => {
+      clearIntroSeenDataset();
+    });
+
+    return () => {
+      cancelAnimationFrame(frameId);
+    };
+  }, [isStarted]);
 
   const exportPng = async () => {
     const svg = svgRef.current;
@@ -56,17 +80,6 @@ export const App = () => {
       setIsExporting(false);
     }
   };
-
-  // if (!isStarted) {
-  //   return (
-  //     <IntroScreen
-  //       onStart={() => {
-  //         saveIntroSeen();
-  //         setIsStarted(true);
-  //       }}
-  //     />
-  //   );
-  // }
 
   return (
     <>

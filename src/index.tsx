@@ -1,8 +1,6 @@
-import { createRoot } from 'react-dom/client';
+import { createRoot, hydrateRoot } from 'react-dom/client';
 import 'ress/ress.css';
-import { App } from './components/app/App';
-import { Provider } from './store';
-import { ThemeProvider } from './theme';
+import { AppRoot } from './AppRoot';
 import './styles/global.css';
 
 (() => {
@@ -11,11 +9,10 @@ import './styles/global.css';
     throw new Error('Root element was not found.');
   }
 
-  createRoot(rootElement).render(
-    <ThemeProvider>
-      <Provider>
-        <App />
-      </Provider>
-    </ThemeProvider>,
-  );
+  if (rootElement.hasChildNodes()) {
+    hydrateRoot(rootElement, <AppRoot />);
+    return;
+  }
+
+  createRoot(rootElement).render(<AppRoot />);
 })();

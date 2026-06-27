@@ -41,6 +41,11 @@
           if (theme === 'light' || theme === 'dark') {
             document.documentElement.dataset.theme = theme;
           }
+
+          const introSeen = sessionStorage.getItem('tileloop:intro-seen');
+          if (introSeen === 'true') {
+            document.documentElement.dataset.introSeen = 'true';
+          }
         } catch {}
       })();
     </script>
@@ -69,14 +74,7 @@
     </script>
   </head>
   <body>
-    <div id="root"></div>
-    <noscript>
-      <main>
-        <h1>TileLoop</h1>
-        <p>TileLoopは、複数の画像をアップロードするだけでタイル状に並べた画像を作成できる無料Webツールです。</p>
-        <p>このアプリを使用するにはJavaScriptを有効にしてください。</p>
-      </main>
-    </noscript>
+    <div id="root"><!-- SSR_CONTENT --></div>
     <script type="module" src="/src/index.tsx"></script>
   </body>
 </html>

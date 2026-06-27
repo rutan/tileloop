@@ -23,6 +23,12 @@
   pointer-events: none;
 }
 
+:global(html[data-intro-seen='true']) .introScreenContainer {
+  opacity: 0;
+  pointer-events: none;
+  transition: none;
+}
+
 .headerArea {
   position: absolute;
   left: max(10px, env(safe-area-inset-left));

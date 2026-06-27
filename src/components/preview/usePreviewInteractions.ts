@@ -12,6 +12,7 @@ import {
 export const MIN_ZOOM = 0.1;
 export const MAX_ZOOM = 4;
 export const ZOOM_STEP = 0.1;
+const useIsomorphicLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
 
 interface Touches {
   item(index: number): { clientX: number; clientY: number } | null;
@@ -273,7 +274,7 @@ export function usePreviewInteractions({ width, height }: UsePreviewInteractions
     zoomRef.current = zoom;
   }, [zoom]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const zoomAnchor = zoomAnchorRef.current;
     if (!zoomAnchor) return;
 

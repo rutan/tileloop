@@ -19,12 +19,6 @@ function isThemePreference(value: string | null): value is ThemePreference {
   return value === 'system' || value === 'light' || value === 'dark';
 }
 
-function getSystemTheme(): EffectiveTheme {
-  if (typeof window === 'undefined') return 'light';
-
-  return window.matchMedia(darkModeMediaQuery).matches ? 'dark' : 'light';
-}
-
 function getStoredThemePreference(): ThemePreference {
   if (typeof window === 'undefined') return 'system';
 
@@ -58,22 +52,28 @@ function applyThemePreference(preference: ThemePreference) {
 }
 
 export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [preference, setPreference] = useState<ThemePreference>(getStoredThemePreference);
-  const [systemTheme, setSystemTheme] = useState<EffectiveTheme>(getSystemTheme);
+  const [preference, setPreference] = useState<ThemePreference>('system');
+  const [systemTheme, setSystemTheme] = useState<EffectiveTheme>('light');
+  const [isMounted, setIsMounted] = useState(false);
   const effectiveTheme = preference === 'system' ? systemTheme : preference;
 
   useEffect(() => {
+    if (!isMounted) return;
+
     applyThemePreference(preference);
     saveThemePreference(preference);
-  }, [preference]);
+  }, [isMounted, preference]);
 
   useEffect(() => {
+    setPreference(getStoredThemePreference());
+
     const mediaQuery = window.matchMedia(darkModeMediaQuery);
     const handleChange = () => {
       setSystemTheme(mediaQuery.matches ? 'dark' : 'light');
     };
 
     handleChange();
+    setIsMounted(true);
     mediaQuery.addEventListener('change', handleChange);
 
     return () => {

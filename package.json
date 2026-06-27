@@ -5,7 +5,10 @@
   "scripts": {
     "start": "vite preview",
     "dev": "vite",
-    "build": "vite build",
+    "build": "run-s build:*",
+    "build:client": "vite build",
+    "build:ssr": "vite build --ssr src/entry-server.tsx --outDir dist-ssr",
+    "build:prerender": "node scripts/prerender.mjs",
     "lint": "run-s lint:*",
     "lint:prettier": "oxfmt --check",
     "lint:oxlint": "oxlint",
