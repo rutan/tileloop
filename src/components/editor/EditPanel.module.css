@@ -1,13 +1,16 @@
 .container {
+  --sheet-outer-bottom: max(12px, env(safe-area-inset-bottom));
+
   position: relative;
   height: var(--sheet-height, min(54dvh, 430px));
   min-height: 0;
-  max-height: inherit;
+  max-height: calc(100dvh - var(--sheet-outer-bottom));
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 
-  margin: 0 12px max(12px, env(safe-area-inset-bottom));
+  margin: 0 12px var(--sheet-outer-bottom);
   padding: 12px;
   background: var(--color-surface-floating);
   backdrop-filter: var(--blur-floating);
@@ -148,6 +151,8 @@
 
 @media (width >= 801px) {
   .container {
-    margin: 0 24px max(24px, env(safe-area-inset-bottom));
+    --sheet-outer-bottom: max(24px, env(safe-area-inset-bottom));
+
+    margin: 0 24px var(--sheet-outer-bottom);
   }
 }

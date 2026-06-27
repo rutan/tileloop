@@ -58,19 +58,19 @@ function getOpenSheetHeight() {
 export const EditPanel: FC<Props> = ({ isExporting, onExport, onSheetHeightChange }) => {
   const [activePanel, setActivePanel] = useState<PanelKey>('pictures');
   const [sheetPosition, setSheetPosition] = useState<SheetPosition>('open');
-  const [openSheetHeight, setOpenSheetHeight] = useState(() =>
-    typeof window === 'undefined' ? maxOpenSheetHeight : getOpenSheetHeight(),
-  );
+  const [openSheetHeight, setOpenSheetHeight] = useState<number | null>(null);
   const [dragHeight, setDragHeight] = useState<number | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const dragRef = useRef<DragState | null>(null);
   const suppressClickRef = useRef(false);
-  const collapsedHeight = Math.min(collapsedSheetHeight, openSheetHeight);
-  const sheetHeight = dragHeight ?? (sheetPosition === 'open' ? openSheetHeight : collapsedHeight);
+  const resolvedOpenSheetHeight = openSheetHeight ?? maxOpenSheetHeight;
+  const collapsedHeight = Math.min(collapsedSheetHeight, resolvedOpenSheetHeight);
+  const sheetHeight = dragHeight ?? (sheetPosition === 'open' ? resolvedOpenSheetHeight : collapsedHeight);
+  const hasMeasuredSheetHeight = openSheetHeight !== null || dragHeight !== null;
   const sheetProgress =
-    openSheetHeight === collapsedHeight
+    resolvedOpenSheetHeight === collapsedHeight
       ? 1
-      : clamp((sheetHeight - collapsedHeight) / (openSheetHeight - collapsedHeight), 0, 1);
+      : clamp((sheetHeight - collapsedHeight) / (resolvedOpenSheetHeight - collapsedHeight), 0, 1);
 
   useEffect(() => {
     const updateOpenSheetHeight = () => {
@@ -88,15 +88,17 @@ export const EditPanel: FC<Props> = ({ isExporting, onExport, onSheetHeightChang
   }, []);
 
   useEffect(() => {
+    if (!hasMeasuredSheetHeight) return;
+
     onSheetHeightChange?.(sheetHeight);
-  }, [onSheetHeightChange, sheetHeight]);
+  }, [hasMeasuredSheetHeight, onSheetHeightChange, sheetHeight]);
 
   const finishDrag = (shouldSnap: boolean) => {
     const drag = dragRef.current;
     if (!drag) return;
 
     if (shouldSnap) {
-      const midpoint = collapsedHeight + (openSheetHeight - collapsedHeight) / 2;
+      const midpoint = collapsedHeight + (resolvedOpenSheetHeight - collapsedHeight) / 2;
       const nextPosition =
         drag.velocityY < -snapVelocityThreshold
           ? 'open'
@@ -140,7 +142,7 @@ export const EditPanel: FC<Props> = ({ isExporting, onExport, onSheetHeightChang
     if (!drag || drag.pointerId !== event.pointerId) return;
 
     const deltaY = event.clientY - drag.startY;
-    const nextHeight = clamp(drag.startHeight - deltaY, collapsedHeight, openSheetHeight);
+    const nextHeight = clamp(drag.startHeight - deltaY, collapsedHeight, resolvedOpenSheetHeight);
     const elapsedTime = event.timeStamp - drag.lastTime;
 
     if (Math.abs(deltaY) > 3) {
@@ -170,10 +172,12 @@ export const EditPanel: FC<Props> = ({ isExporting, onExport, onSheetHeightChang
     finishDrag(true);
   };
 
-  const sheetStyle = {
-    '--sheet-height': `${sheetHeight}px`,
-    '--sheet-progress': `${sheetProgress}`,
-  } as CSSProperties;
+  const sheetStyle = hasMeasuredSheetHeight
+    ? ({
+        '--sheet-height': `${sheetHeight}px`,
+        '--sheet-progress': `${sheetProgress}`,
+      } as CSSProperties)
+    : undefined;
   const panelContent: Record<PanelKey, ReactNode> = {
     pictures: <PictureForm isPasteEnabled={activePanel === 'pictures'} />,
     layout: <LayoutParameterForm />,
