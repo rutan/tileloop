@@ -91,7 +91,7 @@ export const AdjustmentParameterForm = () => {
 
       <PanelSection title="タイルの影">
         <ColorControl
-          title="シャドウの色"
+          title="影の色"
           color={state.renderParameter.shadowColor}
           opacity={state.renderParameter.shadowOpacity}
           onChangeColor={(value) => {

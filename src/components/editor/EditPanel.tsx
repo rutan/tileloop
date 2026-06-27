@@ -17,8 +17,8 @@ interface Props {
 const navItems: { key: PanelKey; title: string; buttonLabel: string; Icon: LucideIcon }[] = [
   { key: 'pictures', title: '並べる画像を選択', buttonLabel: '画像', Icon: ImagePlus },
   { key: 'layout', title: '画像の配置を設定', buttonLabel: '配置', Icon: LayoutGrid },
-  { key: 'adjust', title: 'プロ向けの細かい調整', buttonLabel: '調整', Icon: SlidersHorizontal },
-  { key: 'export', title: 'つくった画像を保存', buttonLabel: '保存', Icon: Download },
+  { key: 'adjust', title: '細かい見た目を調整', buttonLabel: '調整', Icon: SlidersHorizontal },
+  { key: 'export', title: '作成した画像を保存', buttonLabel: '保存', Icon: Download },
 ];
 
 type SheetPosition = 'collapsed' | 'open';

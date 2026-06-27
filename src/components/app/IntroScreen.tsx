@@ -11,7 +11,7 @@ interface Props {
 const featureItems = [
   {
     title: '簡単操作',
-    text: '画像を選んで、配置や余白、背景色などを調整するだけで、すぐにタイル状の画像を作れます。',
+    text: '画像を選んで、配置や余白、背景色などを調整するだけで、すぐにタイル状の画像を作成できます。',
     Icon: ImagePlus,
   },
   {

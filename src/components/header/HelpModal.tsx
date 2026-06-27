@@ -58,7 +58,7 @@ export const HelpModal: FC<Props> = ({ onClose }) => {
             <ul className={styles.list}>
               <li>タイルの画像サイズ、回転、余白、角丸、透明度を調整できます。</li>
               <li>背景の色、不透明度を変更できます。</li>
-              <li>画像のシャドウは色、ぼかし、位置を調整できます。</li>
+              <li>画像の影は色、ぼかし、位置を調整できます。</li>
             </ul>
           </section>
 
@@ -73,7 +73,7 @@ export const HelpModal: FC<Props> = ({ onClose }) => {
             <h3 className={styles.sectionTitle}>このアプリについて</h3>
             <ul className={styles.list}>
               <li>
-                つくったひと：Ruたん（ X:{' '}
+                つくったひと：Ruたん（X:{' '}
                 <a href="https://x.com/ru_shalm" target="_blank" rel="noopener noreferrer">
                   @ru_shalm
                 </a>{' '}

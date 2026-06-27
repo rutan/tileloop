@@ -18,6 +18,7 @@ function clampOpacity(value: number): number {
 export const ColorControl: FC<Props> = ({ title, color, opacity, onChangeColor, onChangeOpacity }) => {
   const [draftColor, setDraftColor] = useState(color);
   const opacityPercent = Math.round(clampOpacity(opacity) * 100);
+  const colorInputLabel = title.endsWith('色') ? `${title}を選択` : `${title}の色`;
 
   useEffect(() => {
     setDraftColor(color);
@@ -31,7 +32,7 @@ export const ColorControl: FC<Props> = ({ title, color, opacity, onChangeColor, 
       </div>
 
       <div className={styles.controls}>
-        <label className={styles.colorPickerLabel} aria-label={`${title}の色`}>
+        <label className={styles.colorPickerLabel} aria-label={colorInputLabel}>
           <input
             className={styles.colorPicker}
             type="color"
