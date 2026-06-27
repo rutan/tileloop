@@ -1,4 +1,4 @@
-import { forwardRef, useMemo } from 'react';
+import { forwardRef, useId, useMemo } from 'react';
 import { createTilePlacements } from '../../functions/createTilePlacements';
 import { RenderParameter } from '../../types/RenderParameter';
 
@@ -7,6 +7,9 @@ interface Props {
 }
 
 export const SvgRenderer = forwardRef<SVGSVGElement, Props>(({ parameter }, ref) => {
+  const idPrefix = useId().replace(/:/g, '');
+  const clipPathId = `${idPrefix}-image-clip`;
+  const dropShadowId = `${idPrefix}-drop-shadow`;
   const {
     width,
     height,
@@ -51,10 +54,10 @@ export const SvgRenderer = forwardRef<SVGSVGElement, Props>(({ parameter }, ref)
       ref={ref}
     >
       <defs>
-        <clipPath id="image-clip">
+        <clipPath id={clipPathId}>
           <rect width={itemWidth} height={itemHeight} rx={borderRadius} />
         </clipPath>
-        <filter id="drop-shadow" x="-50%" y="-50%" width="200%" height="200%">
+        <filter id={dropShadowId} x="-50%" y="-50%" width="200%" height="200%">
           <feDropShadow
             dx={shadowOffsetX}
             dy={shadowOffsetY}
@@ -67,9 +70,9 @@ export const SvgRenderer = forwardRef<SVGSVGElement, Props>(({ parameter }, ref)
       <rect fill={bgColor} opacity={bgOpacity} x={-width / 2} y={-height / 2} width={width} height={height} />
       <g transform={`rotate(${rotation})`}>
         {placements.map((placement) => (
-          <g key={placement.id} transform={`translate(${placement.x} ${placement.y})`} filter="url(#drop-shadow)">
+          <g key={placement.id} transform={`translate(${placement.x} ${placement.y})`} filter={`url(#${dropShadowId})`}>
             <image
-              clipPath="url(#image-clip)"
+              clipPath={`url(#${clipPathId})`}
               href={placement.picture.url}
               width={itemWidth}
               height={itemHeight}
