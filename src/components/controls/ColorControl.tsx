@@ -71,7 +71,7 @@ export const ColorControl: FC<Props> = ({ title, color, opacity, onChangeColor, 
           max={100}
           step={1}
           value={opacityPercent}
-          aria-label={`${title}の透明度`}
+          aria-label={`${title}の不透明度`}
           onChange={(e) => {
             onChangeOpacity(parseInt(e.target.value, 10) / 100);
           }}

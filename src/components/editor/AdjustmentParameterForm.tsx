@@ -80,7 +80,7 @@ export const AdjustmentParameterForm = () => {
           />
 
           <OpacityControl
-            title="透明度"
+            title="不透明度"
             opacity={state.renderParameter.tileOpacity}
             onChangeOpacity={(value) => {
               dispatch(updateRenderParameterItem('tileOpacity', value));
