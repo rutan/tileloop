@@ -15,23 +15,23 @@
     "deploy:wrangler": "wrangler deploy"
   },
   "dependencies": {
-    "lucide-react": "^1.14.0",
+    "lucide-react": "^1.21.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "ress": "^4.0.0"
   },
   "devDependencies": {
-    "@types/node": "^22.19.19",
-    "@types/react": "^18.3.28",
+    "@types/node": "^22.20.0",
+    "@types/react": "^18.3.31",
     "@types/react-dom": "^18.3.7",
     "@typescript/native-preview": "7.0.0-dev.20260512.1",
-    "@vitejs/plugin-react": "^6.0.1",
+    "@vitejs/plugin-react": "^6.0.3",
     "npm-run-all2": "^8.0.4",
     "oxfmt": "^0.49.0",
-    "oxlint": "^1.64.0",
+    "oxlint": "^1.71.0",
     "oxlint-tsgolint": "^0.22.1",
-    "vite": "^8.0.12",
-    "wrangler": "^4.90.1"
+    "vite": "^8.1.0",
+    "wrangler": "^4.104.0"
   },
   "engines": {
     "node": ">=22.12.0"
