@@ -2,3 +2,7 @@ allowBuilds:
   esbuild: false
   sharp: false
   workerd: true
+
+# Keep oxfmt worker pools on the patched release until upstream updates its pin.
+overrides:
+  'oxfmt>tinypool': 2.1.2
